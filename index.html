@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ardele Ndanga | Generative AI Portfolio</title>
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            --text-dark: #2d3748;
+            --text-light: #4a5568;
+            --white: #ffffff;
+            --bg-off-white: #f7fafc;
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --accent-color: #5a67d8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-off-white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-gradient);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            height: 100vh;
+            min-height: 600px;
+            background: var(--primary-gradient);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero-content {
+            z-index: 2;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--white);
+            color: #764ba2;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Abstract shapes for background interest */
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .shape-1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+        .shape-2 { width: 200px; height: 200px; bottom: 100px; right: 10%; }
+
+        /* --- ABOUT ME SECTION --- */
+        .about-me {
+            background-color: var(--white);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .profile-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border-top: 5px solid #764ba2;
+        }
+
+        .avatar-placeholder {
+            width: 150px;
+            height: 150px;
+            background: var(--secondary-gradient);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .profile-details h3 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item strong {
+            display: block;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* --- ABOUT COURSE SECTION --- */
+        .course-section {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            position: relative;
+        }
+
+        .course-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-block h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .module-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .module-list li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .module-list li::before {
+            content: '•';
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1.4rem;
+        }
+
+        /* --- SUBMISSIONS SECTION --- */
+        .submissions {
+            background-color: var(--white);
+        }
+
+        .submissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .submission-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .submission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            height: 100px;
+            background: var(--secondary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-link {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .card-link:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+
+        .card-link.disabled {
+            border-color: #cbd5e0;
+            color: #a0aec0;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .card-link.disabled:hover {
+            background: none;
+            color: #a0aec0;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #2d3748;
+            color: #cbd5e0;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .profile-grid { grid-template-columns: 1fr; }
+            .module-list { grid-template-columns: 1fr; }
+            section { padding: 3rem 0; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Generative AI<br>for Work & Research</h1>
+            <p class="hero-subtitle">The Professional Portfolio of Ardele Ndanga</p>
+            <a href="#about-me" class="btn">View Profile</a>
+        </div>
+    </header>
+
+    <!-- About Me Section -->
+    <section id="about-me" class="about-me">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="profile-grid">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <div class="avatar-placeholder">AN</div>
+                    <h3>Ardele Ndanga</h3>
+                    <p style="color: #718096; margin-bottom: 1rem;">Epidemiologist & Researcher</p>
+                    <div class="tag-container">
+                        <span class="tag">Epidemiology</span>
+                        <span class="tag">HIV Research</span>
+                        <span class="tag">Data Analysis</span>
+                        <span class="tag">R & STATA</span>
+                        <span class="tag">Public Health</span>
+                    </div>
+                </div>
+
+                <!-- Bio Details -->
+                <div class="profile-details">
+                    <h3>Professional Summary</h3>
+                    <p class="detail-item">
+                        I am an early-career epidemiologist with extensive experience managing and analyzing large-scale, multi-country population health data across Sub-Saharan Africa. My expertise lies in HIV and comorbidities research, including cervical cancer and arterial hypertension.
+                    </p>
+                    
+                    <p class="detail-item">
+                        Currently, I am a <strong>Doctoral Student at the University of Bern</strong> and a Research Coordinator at Newlands Clinic in Zimbabwe. I hold a Master of Science in Epidemiology from the London School of Hygiene and Tropical Medicine.
+                    </p>
+
+                    <p class="detail-item">
+                        My work involves securing research funding, coordinating multi-institutional collaborations, and influencing clinical guidelines. I am passionate about leveraging data to improve health outcomes and am now exploring the intersection of Generative AI and research productivity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Section -->
+    <section id="course" class="course-section">
+        <div class="container">
+            <h2>About The Course</h2>
+            <div class="course-content">
+                <p style="font-size: 1.1rem; margin-bottom: 2rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <strong>Generative AI for Work & Research Productivity</strong> is an intensive 8-week program delivered by <em>The GRAPH Courses</em> (University of Geneva). It empowers professionals to use AI tools intelligently for workflow automation, data analysis, and research synthesis.
+                </p>
+                
+                <div class="course-grid">
+                    <div class="info-block">
+                        <h4>Course Focus</h4>
+                        <p>The curriculum covers the practical application of Large Language Models (LLMs) to automate repetitive tasks, analyze complex datasets without code, and synthesize vast amounts of research literature efficiently.</p>
+                    </div>
+                    <div class="info-block">
+                        <h4>Key Skills Developed</h4>
+                        <ul class="module-list">
+                            <li>Workflow Automation</li>
+                            <li>No-Code Data Analysis</li>
+                            <li>Content Creation</li>
+                            <li>Research Synthesis</li>
+                            <li>Custom GPT Creation</li>
+                            <li>AI-driven Communication</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Submissions -->
+    <section id="submissions" class="submissions">
+        <div class="container">
+            <h2>Weekly Submissions</h2>
+            <div class="submissions-grid">
+                
+                <!-- Week 1 -->
+                <div class="submission-card">
+                    <div class="card-header">Week 1</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Websites & Presentations</h4>
+                        <p class="card-desc">Building simple research websites and using AI for presentation design.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="submission-card">
+                    <div class="card-header">Week 2</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Automated Data Analysis</h4>
+                        <p class="card-desc">Using AI tools like Julius and Cursor for no-code data analysis and dashboards.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="submission-card">
+                    <div class="card-header">Week 3</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Text Processing & Research</h4>
+                        <p class="card-desc">Literature search, sentiment analysis, and summarization with LLMs.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="submission-card">
+                    <div class="card-header">Week 4</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Workflow Automation</h4>
+                        <p class="card-desc">Building AI agents and browser control agents for task automation.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                <!-- Week 5 -->
+                <div class="submission-card">
+                    <div class="card-header">Week 5</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Custom GPTs & Chatbots</h4>
+                        <p class="card-desc">Creating interactive chatbots with Botpress and custom GPTs.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="submission-card">
+                    <div class="card-header">Week 6</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Communication & Outreach</h4>
+                        <p class="card-desc">Generating graphics, editable diagrams, and videos for research.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                 <!-- Week 7 -->
+                 <div class="submission-card">
+                    <div class="card-header">Week 7</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Capstone Progress</h4>
+                        <p class="card-desc">Development and refinement of the final AI solution project.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+                 <!-- Week 8 -->
+                 <div class="submission-card">
+                    <div class="card-header">Week 8</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Final Project</h4>
+                        <p class="card-desc">Final presentation of the implemented AI workflow or tool.</p>
+                        <a href="#" class="card-link disabled">Coming Soon</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Ardele Ndanga. All Rights Reserved.</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Generative AI for Work & Research Portfolio</p>
+        </div>
+    </footer>
+
+</body>
+</html>
