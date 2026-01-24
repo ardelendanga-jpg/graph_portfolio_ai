@@ -153,6 +153,17 @@
             border-top: 5px solid #764ba2;
         }
 
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            display: block;
+            border: 3px solid var(--bg-off-white);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .avatar-placeholder {
             width: 150px;
             height: 150px;
@@ -381,12 +392,14 @@
             <div class="profile-grid">
                 <!-- Profile Card -->
                 <div class="profile-card">
-                    <div class="avatar-placeholder">AN</div>
+                    <!-- Updated Image with larger size parameter for clarity -->
+                    <img src="https://avatars.githubusercontent.com/u/239391488?v=4&size=400" alt="Ardele Ndanga" class="profile-image">
                     <h3>Ardele Ndanga</h3>
-                    <p style="color: #718096; margin-bottom: 1rem;">Epidemiologist & Researcher</p>
+                    <p style="color: #718096; margin-bottom: 1rem;">Epidemiologist|Data Analyst| AI Enthusiast</p>
                     <div class="tag-container">
                         <span class="tag">Epidemiology</span>
-                        <span class="tag">HIV Research</span>
+                         <span class="tag">Cardiometabolic Research</span>
+                        <span class="tag">Grant writing</span>
                         <span class="tag">Data Analysis</span>
                         <span class="tag">R & STATA</span>
                         <span class="tag">Public Health</span>
