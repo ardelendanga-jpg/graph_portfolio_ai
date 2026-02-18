@@ -344,6 +344,25 @@
             background: none;
             color: #a0aec0;
         }
+        
+        /* --- CONTACT / FORM SECTION --- */
+        .contact-section {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        }
+        
+        .form-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .form-wrapper iframe {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            background: var(--white);
+        }
 
         /* --- FOOTER --- */
         footer {
@@ -374,7 +393,6 @@
 </head>
 <body>
 
-    <!-- Hero Section -->
     <header>
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
@@ -385,14 +403,11 @@
         </div>
     </header>
 
-    <!-- About Me Section -->
     <section id="about-me" class="about-me">
         <div class="container">
             <h2>About Me</h2>
             <div class="profile-grid">
-                <!-- Profile Card -->
                 <div class="profile-card">
-                    <!-- Updated Image with larger size parameter for clarity -->
                     <img src="https://avatars.githubusercontent.com/u/239391488?v=4&size=400" alt="Ardele Ndanga" class="profile-image">
                     <h3>Ardele Ndanga</h3>
                     <p style="color: #718096; margin-bottom: 1rem;">Epidemiologist|Data Analyst| AI Enthusiast</p>
@@ -406,7 +421,6 @@
                     </div>
                 </div>
 
-                <!-- Bio Details -->
                 <div class="profile-details">
                     <h3>Professional Summary</h3>
                     <p class="detail-item">
@@ -425,7 +439,6 @@
         </div>
     </section>
 
-    <!-- Course Section -->
     <section id="course" class="course-section">
         <div class="container">
             <h2>About The Course</h2>
@@ -455,13 +468,11 @@
         </div>
     </section>
 
-    <!-- Weekly Submissions -->
     <section id="submissions" class="submissions">
         <div class="container">
             <h2>Weekly Submissions</h2>
             <div class="submissions-grid">
                 
-                <!-- Week 1 -->
                 <div class="submission-card">
                     <div class="card-header">Week 1</div>
                     <div class="card-body">
@@ -471,7 +482,6 @@
                     </div>
                 </div>
 
-                <!-- Week 2 -->
                 <div class="submission-card">
                     <div class="card-header">Week 2</div>
                     <div class="card-body">
@@ -481,7 +491,6 @@
                     </div>
                 </div>
 
-                <!-- Week 3 -->
                 <div class="submission-card">
                     <div class="card-header">Week 3</div>
                     <div class="card-body">
@@ -491,7 +500,6 @@
                     </div>
                 </div>
 
-                <!-- Week 4 -->
                 <div class="submission-card">
                     <div class="card-header">Week 4</div>
                     <div class="card-body">
@@ -501,7 +509,6 @@
                     </div>
                 </div>
 
-                <!-- Week 5 -->
                 <div class="submission-card">
                     <div class="card-header">Week 5</div>
                     <div class="card-body">
@@ -511,7 +518,6 @@
                     </div>
                 </div>
 
-                <!-- Week 6 -->
                 <div class="submission-card">
                     <div class="card-header">Week 6</div>
                     <div class="card-body">
@@ -521,7 +527,6 @@
                     </div>
                 </div>
 
-                 <!-- Week 7 -->
                  <div class="submission-card">
                     <div class="card-header">Week 7</div>
                     <div class="card-body">
@@ -531,7 +536,6 @@
                     </div>
                 </div>
 
-                 <!-- Week 8 -->
                  <div class="submission-card">
                     <div class="card-header">Week 8</div>
                     <div class="card-body">
@@ -545,7 +549,15 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Contact for Consultation</h2>
+            <div class="form-wrapper">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScJfY4bNhgL0HYgZkxmzJJTQMTaVLxZ705dXEPGWwKunjXTbw/viewform?embedded=true" width="640" height="988" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container">
             <p>&copy; 2024 Ardele Ndanga. All Rights Reserved.</p>
