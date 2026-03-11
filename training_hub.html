@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Newlands Clinic · HIV & Hypertension Training Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --ink:       #0d1b2a;
+  --ink-soft:  #3d5068;
+  --ink-muted: #7a8fa6;
+  --canvas:    #f7f4ef;
+  --paper:     #ffffff;
+  --rule:      #e2ddd6;
+
+  --hiv:    #1b4e7c;   /* deep blue  – HIV theme   */
+  --htn:    #8b1a1a;   /* deep red   – HTN theme   */
+  --teal:   #0d6e5f;   /* teal       – digest/CTA  */
+  --gold:   #b5860e;   /* gold       – accents     */
+
+  --hiv-lt:    #e8f0f8;
+  --htn-lt:    #f8ebeb;
+  --teal-lt:   #e5f2ef;
+  --gold-lt:   #faf3e3;
+
+  --shadow-sm: 0 2px 8px rgba(13,27,42,.07);
+  --shadow-md: 0 6px 24px rgba(13,27,42,.11);
+  --shadow-lg: 0 16px 48px rgba(13,27,42,.15);
+
+  --r: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Serif 4', serif;
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ─── TOPBAR ─── */
+.topbar {
+  background: var(--ink);
+  color: rgba(255,255,255,.55);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .3px;
+  padding: 8px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar a { color: #7db3d6; text-decoration: none; }
+.topbar a:hover { color: #fff; }
+.tb-live { display:flex; align-items:center; gap:8px; }
+.tb-dot { width:7px; height:7px; border-radius:50%; background:#3ecf8e; animation: pulse 2s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.tb-tag {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 4px;
+  padding: 2px 9px;
+  font-size: 10px;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+}
+
+/* ─── MASTHEAD ─── */
+.masthead {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+  padding: 56px 40px 52px;
+}
+.masthead-noise {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+.masthead-glow {
+  position:absolute; pointer-events:none;
+  border-radius:50%; filter: blur(80px);
+}
+.mg1 { width:500px;height:500px; background:rgba(27,78,124,.35); top:-100px; left:-80px; }
+.mg2 { width:400px;height:400px; background:rgba(139,26,26,.22); bottom:-80px; right:60px; }
+.mg3 { width:300px;height:300px; background:rgba(13,110,95,.2); top:20px; right:300px; }
+
+.masthead-inner {
+  position:relative;
+  max-width: 1240px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+.mh-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #7db3d6;
+  margin-bottom: 14px;
+  display:flex; align-items:center; gap:10px;
+}
+.mh-eyebrow::before {
+  content:'';
+  display:inline-block;
+  width:28px; height:1px;
+  background: #7db3d6;
+}
+.masthead h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+.masthead h1 em { color: #6dd5c2; font-style: normal; }
+.masthead-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,.65);
+  max-width: 640px;
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+.mh-badges { display:flex; gap:10px; flex-wrap:wrap; }
+.mh-badge {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  font-family: 'DM Mono', monospace;
+}
+.mh-b1 { background:rgba(27,78,124,.3); border:1px solid rgba(27,78,124,.5); color:#90c4f0; }
+.mh-b2 { background:rgba(139,26,26,.25); border:1px solid rgba(139,26,26,.45); color:#f5a0a0; }
+.mh-b3 { background:rgba(13,110,95,.25); border:1px solid rgba(13,110,95,.45); color:#6dd5c2; }
+.mh-b4 { background:rgba(181,134,14,.2); border:1px solid rgba(181,134,14,.4); color:#f5cc5a; }
+
+.mh-stats {
+  display:flex; flex-direction:column; gap:12px;
+}
+.mh-stat {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: var(--r);
+  padding: 16px 24px;
+  text-align: center;
+  min-width: 120px;
+  backdrop-filter: blur(12px);
+  transition: background .2s;
+}
+.mh-stat:hover { background: rgba(255,255,255,.12); }
+.mh-stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #6dd5c2;
+  line-height: 1;
+}
+.mh-stat-l {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .5px;
+}
+
+/* ─── NAV ─── */
+nav {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 12px rgba(13,27,42,.06);
+}
+.nav-inner {
+  max-width: 1240px; margin: 0 auto;
+  padding: 0 40px;
+  display: flex; align-items: stretch;
+  overflow-x: auto;
+}
+.nav-tab {
+  padding: 15px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  display: flex; align-items: center; gap: 7px;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .2px;
+}
+.nav-tab:hover { color: var(--ink); }
+.nav-tab.active { color: var(--hiv); border-bottom-color: var(--hiv); }
+.nav-icon { font-size: 15px; }
+
+/* ─── PAGE WRAPPER ─── */
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 40px 80px; }
+.section { display: none; animation: fadeUp .35s ease both; }
+.section.active { display: block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─── SECTION HEADER ─── */
+.sec-hdr {
+  display: flex; align-items: flex-start; gap: 18px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.sec-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.si-blue { background: var(--hiv-lt); }
+.si-red  { background: var(--htn-lt); }
+.si-teal { background: var(--teal-lt); }
+.si-gold { background: var(--gold-lt); }
+.sec-hdr h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.sec-hdr p { font-size: 13.5px; color: var(--ink-muted); }
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--paper);
+  border-radius: var(--r);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .25s, transform .25s, border-color .25s;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: all .2s;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .2px;
+}
+.btn-primary { background: var(--hiv); color: #fff; }
+.btn-primary:hover { background: #143d63; }
+.btn-teal { background: var(--teal); color: #fff; }
+.btn-teal:hover { background: #0a5a4d; }
+.btn-ghost { background: transparent; color: var(--hiv); border: 1.5px solid var(--hiv); }
+.btn-ghost:hover { background: var(--hiv-lt); }
+.btn-sm { padding: 7px 15px; font-size: 12px; }
+.btn-red { background: var(--htn); color: #fff; }
+.btn-red:hover { background: #6e1414; }
+
+
+/* ═══════════════════════════════
+   OVERVIEW
+══════════════════════════════ */
+.ov-hero {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 44px 48px;
+  color: #fff;
+  margin-bottom: 28px;
+  position: relative; overflow: hidden;
+}
+.ov-hero::before {
+  content:''; position:absolute; right:-60px; top:-60px;
+  width:350px;height:350px;
+  background:radial-gradient(circle,rgba(13,110,95,.3) 0%,transparent 70%);
+  pointer-events:none;
+}
+.ov-hero::after {
+  content:''; position:absolute; left:30%; bottom:-40px;
+  width:280px;height:280px;
+  background:radial-gradient(circle,rgba(27,78,124,.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.ov-hero-content { position:relative; z-index:1; }
+.ov-hero h2 {
+  font-family:'Playfair Display',serif;
+  font-size:28px; font-weight:800;
+  margin-bottom:14px;
+}
+.ov-hero h2 span { color:#6dd5c2; }
+.ov-hero p { font-size:14.5px; color:rgba(255,255,255,.72); max-width:680px; line-height:1.75; margin-bottom:24px; }
+.ov-cta { display:flex; gap:12px; flex-wrap:wrap; }
+
+.alert-box {
+  border-radius: var(--r);
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.alert-problem { background:var(--htn-lt); border:1px solid #e8aaaa; border-left:4px solid var(--htn); }
+.alert-solution { background:var(--teal-lt); border:1px solid #a8d8ce; border-left:4px solid var(--teal); }
+.alert-box .al-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
+.alert-box h4 { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; font-family:'DM Mono',monospace; }
+.alert-problem h4 { color:var(--htn); }
+.alert-solution h4 { color:var(--teal); }
+.alert-box p { font-size:13.5px; line-height:1.7; color:var(--ink-soft); }
+
+.ov-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:28px; }
+.ov-card { padding:28px; cursor:pointer; }
+.ov-card-num {
+  font-family:'Playfair Display',serif;
+  font-size:40px; font-weight:800;
+  line-height:1;
+  margin-bottom:12px;
+}
+.ov-card:nth-child(1) .ov-card-num { color:var(--hiv); }
+.ov-card:nth-child(2) .ov-card-num { color:var(--teal); }
+.ov-card:nth-child(3) .ov-card-num { color:var(--gold); }
+.ov-card h3 { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; margin-bottom:8px; }
+.ov-card p { font-size:13px; color:var(--ink-muted); line-height:1.65; }
+.ov-card .ov-link { display:flex; align-items:center; gap:5px; margin-top:16px; font-size:12.5px; font-weight:600; font-family:'DM Mono',monospace; }
+.ov-card:nth-child(1) .ov-link { color:var(--hiv); }
+.ov-card:nth-child(2) .ov-link { color:var(--teal); }
+.ov-card:nth-child(3) .ov-link { color:var(--gold); }
+
+/* ═══════════════════════════════
+   VISUAL ABSTRACTS
+══════════════════════════════ */
+.va-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px; }
+.va-card { overflow:hidden; }
+.va-card-stripe { height:5px; }
+.vs-hiv { background:linear-gradient(90deg,var(--hiv),#2a7ac0); }
+.vs-htn { background:linear-gradient(90deg,var(--htn),#c44); }
+.va-body { padding:22px 24px 18px; border-bottom:1px solid var(--rule); }
+.va-kind {
+  font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500;
+  letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:7px;
+}
+.vk-sop { color:var(--hiv); }
+.vk-research { color:var(--teal); }
+.va-body h3 { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; line-height:1.35; margin-bottom:6px; }
+.va-body .va-meta { font-size:12px; color:var(--ink-muted); }
+.va-thumb {
+  height:210px;
+  background: var(--canvas);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:10px;
+  border-bottom:1px solid var(--rule);
+  position:relative; overflow:hidden;
+}
+.va-thumb-icon { font-size:52px; opacity:.3; }
+.va-thumb-label { font-size:12px; color:var(--ink-muted); font-family:'DM Mono',monospace; letter-spacing:.3px; }
+.va-thumb-sub { font-size:11px; color:var(--ink-muted); opacity:.7; }
+.va-foot { padding:14px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.tag-row { display:flex; gap:6px; flex-wrap:wrap; }
+.tag {
+  font-family:'DM Mono',monospace; font-size:10.5px;
+  background:var(--canvas); border:1px solid var(--rule);
+  border-radius:5px; padding:2px 8px;
+  color:var(--ink-muted);
+}
+
+.va-explainer { padding:26px 28px; margin-bottom:0; }
+.va-explainer h3 { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; margin-bottom:20px; }
+.step-flow { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.step-box { padding:18px 14px; background:var(--canvas); border-radius:10px; border:1px solid var(--rule); text-align:center; }
+.step-circle {
+  width:34px; height:34px; border-radius:50%;
+  background:var(--hiv); color:#fff;
+  font-family:'Playfair Display',serif; font-size:15px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 12px;
+}
+.step-box h4 { font-size:12.5px; font-weight:700; margin-bottom:5px; color:var(--ink); }
+.step-box p { font-size:11.5px; color:var(--ink-muted); line-height:1.55; }
+
+/* ═══════════════════════════════
+   LITERATURE DIGEST
+══════════════════════════════ */
+.digest-banner {
+  background:linear-gradient(135deg,#083d30 0%,var(--teal) 100%);
+  border-radius:16px; padding:32px 36px;
+  color:#fff; margin-bottom:24px;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.db-left h3 { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:10px; }
+.db-left p { font-size:13.5px; color:rgba(255,255,255,.72); max-width:520px; line-height:1.7; }
+.db-cta { display:flex; gap:10px; margin-top:18px; }
+.db-stats { display:flex; gap:14px; flex-shrink:0; }
+.dstat { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); border-radius:10px; padding:14px 18px; text-align:center; min-width:80px; }
+.dstat-n { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#6dd5c2; line-height:1; }
+.dstat-l { font-size:10px; color:rgba(255,255,255,.55); margin-top:3px; font-family:'DM Mono',monospace; letter-spacing:.4px; }
+
+.digest-layout { display:grid; grid-template-columns:1fr 300px; gap:24px; }
+.art-list { display:flex; flex-direction:column; gap:16px; }
+.art-card { padding:22px 24px; }
+.art-card:hover { border-color: var(--teal); }
+.art-top { display:flex; gap:10px; align-items:center; margin-bottom:8px; }
+.art-kicker {
+  background:var(--teal-lt); color:var(--teal);
+  font-family:'DM Mono',monospace; font-size:10.5px; font-weight:600;
+  padding:2px 9px; border-radius:4px; letter-spacing:.3px;
+}
+.art-journal { font-size:11.5px; color:var(--ink-muted); font-family:'DM Mono',monospace; }
+.art-card h4 { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:10px; line-height:1.35; }
+.art-summary { font-size:13px; color:var(--ink-soft); line-height:1.7; margin-bottom:12px; }
+.art-takeaway { color:var(--teal); font-weight:600; }
+.art-foot { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.art-authors { font-size:12px; color:var(--ink-muted); font-style:italic; }
+.art-more { text-align:center; padding:20px; }
+.art-more p { font-size:12px; color:var(--ink-muted); margin-top:8px; font-family:'DM Mono',monospace; }
+
+.sidebar { display:flex; flex-direction:column; gap:16px; }
+.sb-card { padding:20px; }
+.sb-card h4 {
+  font-family:'Playfair Display',serif; font-size:15px; font-weight:700;
+  margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule);
+  color:var(--ink);
+}
+.sb-list { list-style:none; }
+.sb-list li {
+  font-size:12.5px; padding:7px 0;
+  border-bottom:1px solid var(--rule); color:var(--ink-soft);
+  display:flex; align-items:center; gap:8px;
+}
+.sb-list li:last-child { border-bottom:none; }
+.sb-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--rule); font-size:12.5px; }
+.sb-row:last-child { border-bottom:none; }
+.sb-label { color:var(--ink-muted); }
+.sb-value { font-weight:600; color:var(--ink); font-family:'DM Mono',monospace; font-size:12px; }
+.sb-value.active { color:var(--teal); }
+.sb-explain { font-size:12.5px; color:var(--ink-muted); line-height:1.65; margin-bottom:14px; }
+
+/* ═══════════════════════════════
+   SOP / GUIDELINES
+══════════════════════════════ */
+.sop-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:28px; }
+.sop-card { overflow:hidden; }
+.sop-head { padding:22px 24px 18px; }
+.sop-ver { font-family:'DM Mono',monospace; font-size:10.5px; letter-spacing:.8px; text-transform:uppercase; font-weight:600; margin-bottom:7px; color:var(--teal); }
+.sop-head h3 { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; margin-bottom:9px; color:var(--ink); line-height:1.3; }
+.sop-head p { font-size:12.5px; color:var(--ink-muted); line-height:1.65; }
+.sop-refs { background:var(--canvas); border-top:1px solid var(--rule); padding:12px 24px; font-size:12px; color:var(--ink-muted); }
+.sop-refs strong { color:var(--ink-soft); }
+.sop-foot { padding:14px 24px; border-top:1px solid var(--rule); display:flex; gap:10px; align-items:center; }
+
+.kp-panel { padding:28px; margin-bottom:0; }
+.kp-panel h3 { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; margin-bottom:22px; }
+.kp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.kp-item {
+  padding:16px;
+  background:var(--canvas); border-radius:10px;
+  border:1px solid var(--rule);
+}
+.kp-icon { font-size:20px; margin-bottom:10px; }
+.kp-item h4 { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:5px; }
+.kp-item p { font-size:12px; color:var(--ink-muted); line-height:1.55; }
+
+/* ═══════════════════════════════
+   HOW IT WORKS
+══════════════════════════════ */
+.flow-wrap { margin-bottom:32px; }
+.flow-step {
+  display:grid; grid-template-columns:56px 1fr;
+  gap:0; align-items:stretch;
+  margin-bottom:0;
+}
+.flow-left { display:flex; flex-direction:column; align-items:center; }
+.flow-circle {
+  width:48px; height:48px; border-radius:50%;
+  background:var(--ink); color:#fff;
+  font-family:'Playfair Display',serif; font-size:17px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; z-index:1;
+  border: 3px solid var(--canvas);
+  box-shadow: 0 0 0 2px var(--hiv);
+}
+.flow-line { flex:1; width:2px; background:var(--rule); margin:4px 0; }
+.flow-step:last-child .flow-line { display:none; }
+.flow-content { padding:0 0 28px 20px; }
+.flow-content .card { padding:20px 24px; }
+.flow-content h3 { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; margin-bottom:7px; }
+.flow-content p { font-size:13px; color:var(--ink-muted); line-height:1.65; }
+.tech-tags { display:flex; gap:7px; flex-wrap:wrap; margin-top:11px; }
+.tech-tag {
+  background:var(--hiv-lt); color:var(--hiv);
+  font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500;
+  padding:3px 9px; border-radius:5px;
+}
+
+.cost-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.cost-item {
+  padding:20px;
+  background:var(--canvas); border-radius:10px;
+  border:1px solid var(--rule); text-align:center;
+}
+.cost-free {
+  font-family:'Playfair Display',serif; font-size:28px; font-weight:800;
+  color:var(--teal); margin-bottom:6px;
+}
+.cost-item h4 { font-size:13px; font-weight:700; margin-bottom:5px; }
+.cost-item p { font-size:12px; color:var(--ink-muted); line-height:1.55; }
+
+.code-panel {
+  background:#0d1b2a; border-radius:12px;
+  padding:22px 26px; margin-top:20px;
+  font-family:'DM Mono',monospace; font-size:12.5px;
+  color:#a8c7f0; overflow-x:auto; line-height:1.8;
+}
+.c-comment { color:#4a8a6a; }
+.c-key { color:#c792ea; }
+.c-str { color:#c3e88d; }
+.c-fn { color:#82aaff; }
+.c-num { color:#f78c6c; }
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(10,18,30,.8); z-index:1000;
+  backdrop-filter:blur(6px);
+  align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; animation:fadeIn .25s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.modal-box {
+  background:var(--paper); border-radius:16px;
+  width:92vw; max-width:1100px; max-height:88vh;
+  overflow-y:auto; box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.modal-hdr {
+  padding:22px 28px 16px;
+  border-bottom:1px solid var(--rule);
+  display:flex; justify-content:space-between; align-items:flex-start;
+  position:sticky; top:0; background:var(--paper); z-index:10;
+  border-radius:16px 16px 0 0;
+}
+.modal-hdr h3 { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; }
+.modal-hdr p { font-size:12px; color:var(--ink-muted); margin-top:2px; }
+.modal-close {
+  width:36px;height:36px; border-radius:50%;
+  background:var(--canvas); border:1px solid var(--rule);
+  cursor:pointer; font-size:18px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ink-muted); flex-shrink:0;
+  transition:all .2s;
+}
+.modal-close:hover { background:var(--htn-lt); color:var(--htn); }
+.modal-body { padding:28px; }
+.modal-placeholder {
+  background:var(--canvas); border-radius:10px;
+  padding:48px 32px; text-align:center;
+  border:2px dashed var(--rule);
+}
+.modal-placeholder .mp-icon { font-size:60px; margin-bottom:18px; opacity:.35; }
+.modal-placeholder h4 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--ink); margin-bottom:10px; }
+.modal-placeholder p { font-size:13.5px; color:var(--ink-muted); max-width:540px; margin:0 auto 8px; line-height:1.7; }
+.modal-placeholder code { font-family:'DM Mono',monospace; font-size:12px; background:var(--rule); padding:2px 7px; border-radius:4px; }
+
+/* ─── FOOTER ─── */
+footer {
+  background:var(--ink); color:rgba(255,255,255,.5);
+  text-align:center; padding:30px 40px;
+  font-size:12px; line-height:1.9;
+  font-family:'DM Mono',monospace;
+}
+footer strong { color:rgba(255,255,255,.85); }
+footer a { color:#6dd5c2; text-decoration:none; }
+footer a:hover { color:#a0ece3; }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px) {
+  .masthead-inner { grid-template-columns:1fr; }
+  .mh-stats { flex-direction:row; flex-wrap:wrap; }
+  .ov-cards,.kp-grid,.step-flow,.cost-grid { grid-template-columns:1fr 1fr; }
+  .va-grid,.sop-grid,.digest-layout { grid-template-columns:1fr; }
+  .digest-banner { flex-direction:column; }
+  .db-stats { flex-wrap:wrap; }
+  .page { padding:28px 20px 60px; }
+  .masthead { padding:40px 20px; }
+}
+@media(max-width:560px) {
+  .ov-cards,.kp-grid,.step-flow,.cost-grid { grid-template-columns:1fr; }
+}
+
+/* ═══════════════════════════════
+   CME LECTURE SHELL
+══════════════════════════════ */
+.lecture-shell { display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:start; }
+.lec-sidebar { position:sticky; top:72px; }
+.lec-panel { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:12px; }
+.lec-panel-head { padding:10px 14px; border-bottom:1px solid var(--rule); }
+.lec-panel-head span { font-family:'DM Mono',monospace; font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--ink-muted); }
+.mod-btn { width:100%; text-align:left; border:none; background:none; cursor:pointer; border-bottom:1px solid var(--rule); transition:background .18s; padding:0; }
+.mod-btn:last-child { border-bottom:none; }
+.mod-btn:hover { background:var(--canvas); }
+.mod-btn.active { background:var(--hiv-lt); }
+.mb-inner { padding:10px 13px; display:flex; gap:9px; align-items:flex-start; }
+.mb-num { width:22px; height:22px; border-radius:6px; background:var(--rule); font-family:'DM Mono',monospace; font-size:10px; font-weight:700; color:var(--ink-muted); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; transition:background .2s,color .2s; }
+.mod-btn.active .mb-num { background:var(--hiv); color:#fff; }
+.mod-btn.viewed .mb-num { background:var(--teal); color:#fff; }
+.mb-info h4 { font-size:12px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:2px; }
+.mb-info p { font-size:10.5px; color:var(--ink-muted); font-family:'DM Mono',monospace; }
+.lec-progress { padding:12px 14px; }
+.lp-row { display:flex; justify-content:space-between; font-size:11px; color:var(--ink-muted); font-family:'DM Mono',monospace; margin-bottom:6px; }
+.lp-track { height:5px; background:var(--rule); border-radius:3px; overflow:hidden; }
+.lp-bar { height:100%; background:linear-gradient(90deg,var(--hiv),var(--teal)); border-radius:3px; transition:width .5s ease; width:0%; }
+
+/* ── AVATAR + SLIDE SPLIT ── */
+.av-stage { display:grid; grid-template-columns:280px 1fr; gap:18px; margin-bottom:18px; align-items:start; }
+.av-panel { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-md); overflow:hidden; display:flex; flex-direction:column; }
+.av-inner { padding:20px 18px; flex:1; }
+.av-face { text-align:center; margin-bottom:16px; }
+.av-head { position:relative; display:inline-block; margin-bottom:10px; }
+.av-circle { position:relative; z-index:2; }
+.av-rings { position:absolute; inset:-8px; pointer-events:none; }
+.av-ring { position:absolute; inset:0; border-radius:50%; border:2px solid transparent; animation:spin 3s linear infinite; }
+.av-ring.r1 { border-top-color:var(--hiv); border-right-color:var(--hiv); opacity:.4; }
+.av-ring.r2 { border-bottom-color:var(--teal); border-left-color:var(--teal); opacity:.3; animation-duration:4.5s; animation-direction:reverse; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.av-name { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:2px; }
+.av-title { font-size:11px; color:var(--ink-muted); font-family:'DM Mono',monospace; letter-spacing:.5px; margin-bottom:8px; }
+.av-status { display:flex; align-items:center; justify-content:center; gap:6px; font-size:11px; font-family:'DM Mono',monospace; color:var(--ink-muted); }
+.av-dot { width:7px; height:7px; border-radius:50%; background:#3ecf8e; animation:avpulse 2s ease infinite; }
+.av-dot.thinking { background:var(--gold); }
+@keyframes avpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+.av-bubble { background:var(--canvas); border:1px solid var(--rule); border-radius:10px; padding:12px 14px; position:relative; min-height:60px; }
+.av-bubble::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%); border:8px solid transparent; border-bottom-color:var(--rule); }
+.av-bubble::after { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); border:7px solid transparent; border-bottom-color:var(--canvas); }
+.ab-text { font-size:12.5px; color:var(--ink-soft); line-height:1.65; }
+/* Typing dots */
+.typing-dots { display:inline-flex; gap:4px; align-items:center; padding:4px 0; }
+.typing-dots span { width:7px; height:7px; border-radius:50%; background:var(--ink-muted); animation:tdot .9s ease infinite; }
+.typing-dots span:nth-child(2){animation-delay:.15s} .typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1.1);opacity:1}}
+/* Chat input in avatar */
+.av-chat { border-top:1px solid var(--rule); padding:12px 14px; background:var(--canvas); }
+.av-chat-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-muted); margin-bottom:7px; }
+.av-chat-row { display:flex; gap:8px; align-items:flex-end; }
+.av-input { flex:1; padding:8px 12px; border-radius:8px; border:1.5px solid var(--rule); background:var(--paper); font-size:12.5px; font-family:'Source Serif 4',serif; color:var(--ink); resize:none; outline:none; transition:border-color .2s; min-height:36px; line-height:1.5; }
+.av-input:focus { border-color:var(--hiv); }
+.av-send { width:36px; height:36px; border-radius:8px; background:var(--hiv); border:none; cursor:pointer; color:#fff; font-size:14px; display:flex; align-items:center; justify-content:center; transition:background .2s; flex-shrink:0; }
+.av-send:hover { background:#143d63; }
+.av-send:disabled { background:var(--rule); cursor:not-allowed; }
+/* Slide half */
+.slide-half { min-width:0; }
+.slide-player { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-md); overflow:hidden; margin-bottom:14px; }
+.slide-screen { background:var(--ink); min-height:340px; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:center; padding:36px 42px; }
+.ss-glow1 { position:absolute; width:380px; height:380px; border-radius:50%; filter:blur(80px); background:rgba(27,78,124,.35); top:-100px; left:-60px; pointer-events:none; }
+.ss-glow2 { position:absolute; width:300px; height:300px; border-radius:50%; filter:blur(70px); background:rgba(13,110,95,.22); bottom:-50px; right:30px; pointer-events:none; }
+.slide-eyebrow { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#7db3d6; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.slide-eyebrow::before { content:''; width:16px; height:1px; background:#7db3d6; }
+.slide-h { font-family:'Playfair Display',serif; font-size:clamp(18px,2.2vw,27px); font-weight:800; color:#fff; line-height:1.2; margin-bottom:12px; }
+.slide-h em { color:#6dd5c2; font-style:normal; }
+.slide-body { font-size:13px; color:rgba(255,255,255,.7); line-height:1.8; max-width:600px; }
+.slide-body strong { color:rgba(255,255,255,.92); }
+.slide-extra { margin-top:16px; }
+/* Data boxes on slides */
+.s-dg { display:grid; gap:9px; }
+.s-dg.c2 { grid-template-columns:1fr 1fr; }
+.s-dg.c3 { grid-template-columns:1fr 1fr 1fr; }
+.s-db { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.11); border-radius:8px; padding:12px 14px; }
+.s-dv { font-family:'Playfair Display',serif; font-size:24px; font-weight:700; color:#6dd5c2; line-height:1; margin-bottom:3px; }
+.s-dl { font-size:10.5px; color:rgba(255,255,255,.55); font-family:'DM Mono',monospace; }
+.s-ds { font-size:10.5px; color:rgba(255,255,255,.38); margin-top:2px; }
+/* Bullet lists */
+.s-ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.s-ul li { display:flex; gap:9px; align-items:flex-start; font-size:12.5px; color:rgba(255,255,255,.75); line-height:1.5; }
+.sd { width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; flex-shrink:0; margin-top:1px; }
+.sd-t{background:rgba(13,110,95,.4);border:1px solid rgba(13,110,95,.6);color:#6dd5c2;}
+.sd-b{background:rgba(27,78,124,.4);border:1px solid rgba(27,78,124,.6);color:#90c4f0;}
+.sd-g{background:rgba(181,134,14,.35);border:1px solid rgba(181,134,14,.55);color:#f5cc5a;}
+.sd-r{background:rgba(139,26,26,.4);border:1px solid rgba(139,26,26,.6);color:#f5a0a0;}
+/* Drug table on slides */
+.s-table { width:100%; border-collapse:collapse; font-size:11.5px; color:rgba(255,255,255,.8); }
+.s-table th { background:rgba(255,255,255,.12); padding:7px 10px; text-align:left; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.5px; font-weight:600; }
+.s-table td { padding:7px 10px; border-bottom:1px solid rgba(255,255,255,.08); }
+.s-table tr:last-child td { border-bottom:none; }
+.s-table .tag-ok { color:#6dd5c2; font-weight:700; }
+.s-table .tag-warn { color:#f5cc5a; font-weight:700; }
+.s-table .tag-no { color:#f5a0a0; font-weight:700; }
+/* Warning/alert box on slide */
+.s-alert { background:rgba(181,134,14,.12); border:1px solid rgba(181,134,14,.3); border-left:3px solid #f5cc5a; border-radius:7px; padding:11px 14px; }
+.s-alert-lbl { font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:1px; text-transform:uppercase; color:#f5cc5a; margin-bottom:4px; }
+.s-alert p { font-size:12px; color:rgba(255,255,255,.8); line-height:1.6; }
+/* Slide counter & dots */
+.slide-counter { position:absolute; bottom:12px; right:16px; font-family:'DM Mono',monospace; font-size:10.5px; color:rgba(255,255,255,.35); z-index:2; }
+.slide-dots { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:5px; z-index:2; }
+.sdot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.25); cursor:pointer; transition:all .2s; }
+.sdot.active { background:#6dd5c2; width:14px; border-radius:3px; }
+/* Controls */
+.slide-controls { padding:12px 18px; border-top:1px solid var(--rule); display:flex; align-items:center; gap:10px; }
+.sc-btn { width:34px; height:34px; border-radius:50%; border:1.5px solid var(--rule); background:var(--canvas); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--ink-soft); transition:all .2s; flex-shrink:0; }
+.sc-btn:hover { background:var(--hiv-lt); border-color:var(--hiv); color:var(--hiv); }
+.sc-btn.play { background:var(--hiv); border-color:var(--hiv); color:#fff; width:40px; height:40px; font-size:15px; }
+.sc-btn.play:hover { background:#143d63; }
+.sc-prog { flex:1; height:4px; background:var(--rule); border-radius:2px; cursor:pointer; overflow:hidden; }
+.sc-fill { height:100%; background:linear-gradient(90deg,var(--hiv),var(--teal)); border-radius:2px; transition:width .3s ease; }
+.sc-time { font-family:'DM Mono',monospace; font-size:11px; color:var(--ink-muted); white-space:nowrap; }
+/* Notes */
+.slide-notes { background:var(--canvas); border:1px solid var(--rule); border-radius:9px; padding:13px 16px; display:flex; gap:9px; align-items:flex-start; }
+.sn-icon { font-size:15px; flex-shrink:0; margin-top:1px; }
+.sn-label { font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-muted); margin-bottom:3px; }
+.sn-text { font-size:12.5px; color:var(--ink-soft); line-height:1.7; font-style:italic; }
+/* Key points */
+.lec-kp { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; margin-bottom:16px; }
+.lkp { background:var(--paper); border-radius:10px; border:1px solid var(--rule); padding:15px; box-shadow:var(--shadow-sm); }
+.lkp-icon { font-size:19px; margin-bottom:7px; }
+.lkp h4 { font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+.lkp p { font-size:11.5px; color:var(--ink-muted); line-height:1.55; }
+/* Quiz */
+.lec-quiz { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-sm); padding:20px; }
+.lec-quiz h3 { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; margin-bottom:13px; }
+.q-text { font-size:13.5px; color:var(--ink); margin-bottom:13px; line-height:1.55; }
+.q-opts { display:flex; flex-direction:column; gap:7px; }
+.qo { padding:10px 14px; border-radius:7px; border:1.5px solid var(--rule); background:var(--canvas); cursor:pointer; font-size:13px; color:var(--ink); transition:all .2s; display:flex; align-items:center; gap:9px; }
+.qo:hover { border-color:var(--hiv); background:var(--hiv-lt); }
+.qo.correct { background:#e5f2ef; border-color:var(--teal); color:var(--teal); pointer-events:none; }
+.qo.wrong { background:var(--htn-lt); border-color:var(--htn); color:var(--htn); pointer-events:none; }
+.qo.dim { pointer-events:none; opacity:.55; }
+.q-feedback { margin-top:12px; padding:12px 15px; border-radius:8px; font-size:13px; line-height:1.65; display:none; }
+.q-feedback.show { display:block; }
+.q-feedback.ok { background:#e5f2ef; border:1px solid var(--teal); color:#0a4535; }
+.q-feedback.bad { background:var(--htn-lt); border:1px solid var(--htn); color:#5a1010; }
+/* Responsive */
+@media(max-width:1000px){
+  .av-stage { grid-template-columns:1fr; }
+  .av-panel { flex-direction:row; }
+  .av-inner { display:flex; gap:16px; align-items:flex-start; }
+  .av-face { text-align:left; flex-shrink:0; margin-bottom:0; }
+}
+@media(max-width:860px){
+  .lecture-shell { grid-template-columns:1fr; }
+  .lec-sidebar { position:static; }
+  .lec-kp { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:540px){
+  .lec-kp { grid-template-columns:1fr; }
+  .slide-screen { padding:24px 22px; }
+  .s-dg.c2,.s-dg.c3 { grid-template-columns:1fr 1fr; }
+}
+
+/* ═══════════════════════════════
+   EMAIL REGISTRATION
+══════════════════════════════ */
+.reg-card { background:var(--ink); border-radius:var(--r); overflow:hidden; margin-bottom:28px; }
+.reg-inner { padding:26px 28px; display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:center; }
+.reg-text h3 { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:#fff; margin-bottom:7px; }
+.reg-text p { font-size:13px; color:rgba(255,255,255,.62); line-height:1.7; }
+.reg-form { display:flex; flex-direction:column; gap:9px; }
+.reg-row { display:flex; gap:8px; }
+.reg-input { flex:1; padding:10px 13px; border-radius:7px; border:1.5px solid rgba(255,255,255,.18); background:rgba(255,255,255,.08); color:#fff; font-size:13.5px; font-family:'Source Serif 4',serif; outline:none; transition:border-color .2s; }
+.reg-input::placeholder { color:rgba(255,255,255,.38); }
+.reg-input:focus { border-color:#6dd5c2; }
+.reg-btn { padding:10px 18px; border-radius:7px; background:#6dd5c2; color:var(--ink); font-size:13px; font-weight:700; border:none; cursor:pointer; font-family:'DM Mono',monospace; white-space:nowrap; transition:background .2s; flex-shrink:0; }
+.reg-btn:hover { background:#a0ece3; }
+.reg-meta { font-size:10.5px; color:rgba(255,255,255,.35); font-family:'DM Mono',monospace; }
+.reg-success { display:none; text-align:center; padding:13px; background:rgba(13,110,95,.25); border-radius:7px; border:1px solid rgba(13,110,95,.4); color:#6dd5c2; font-size:13px; }
+@media(max-width:680px){ .reg-inner { grid-template-columns:1fr; } }
+
+
+/* ═══════════════════════════════
+   CME LECTURES
+══════════════════════════════ */
+.lecture-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+/* Module sidebar */
+.lec-sidebar { position: sticky; top: 72px; }
+.lec-panel { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:14px; }
+.lec-panel-head { padding:12px 16px; border-bottom:1px solid var(--rule); display:flex; align-items:center; gap:7px; }
+.lec-panel-head span { font-family:'DM Mono',monospace; font-size:10.5px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--ink-muted); }
+.mod-btn { width:100%; text-align:left; border:none; background:none; cursor:pointer; border-bottom:1px solid var(--rule); padding:0; transition:background .18s; }
+.mod-btn:last-child { border-bottom:none; }
+.mod-btn:hover { background:var(--canvas); }
+.mod-btn.active { background:var(--hiv-lt); }
+.mod-btn.viewed .mb-num { background:var(--teal); color:#fff; }
+.mb-inner { padding:11px 14px; display:flex; gap:10px; align-items:flex-start; }
+.mb-num { width:22px; height:22px; border-radius:6px; background:var(--rule); font-family:'DM Mono',monospace; font-size:10px; font-weight:700; color:var(--ink-muted); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; transition:background .2s,color .2s; }
+.mod-btn.active .mb-num { background:var(--hiv); color:#fff; }
+.mb-info h4 { font-size:12.5px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:2px; }
+.mb-info p { font-size:11px; color:var(--ink-muted); font-family:'DM Mono',monospace; }
+.lec-progress { padding:14px 16px; }
+.lp-row { display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-muted); font-family:'DM Mono',monospace; margin-bottom:7px; }
+.lp-track { height:5px; background:var(--rule); border-radius:3px; overflow:hidden; }
+.lp-bar { height:100%; background:linear-gradient(90deg,var(--hiv),var(--teal)); border-radius:3px; transition:width .5s ease; width:0%; }
+/* Slide player */
+.lec-stage { min-width:0; }
+.slide-player { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-md); overflow:hidden; margin-bottom:18px; }
+.slide-screen {
+  background:var(--ink); min-height:380px;
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:40px 48px;
+}
+.ss-glow1 { position:absolute; width:420px; height:420px; border-radius:50%; filter:blur(80px); background:rgba(27,78,124,.35); top:-100px; left:-60px; pointer-events:none; }
+.ss-glow2 { position:absolute; width:320px; height:320px; border-radius:50%; filter:blur(70px); background:rgba(13,110,95,.22); bottom:-60px; right:40px; pointer-events:none; }
+.slide-eyebrow { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#7db3d6; margin-bottom:14px; display:flex; align-items:center; gap:8px; position:relative; z-index:1; }
+.slide-eyebrow::before { content:''; width:18px; height:1px; background:#7db3d6; }
+.slide-h { font-family:'Playfair Display',serif; font-size:clamp(20px,2.5vw,30px); font-weight:800; color:#fff; line-height:1.2; margin-bottom:14px; position:relative; z-index:1; }
+.slide-h em { color:#6dd5c2; font-style:normal; }
+.slide-body { font-size:13.5px; color:rgba(255,255,255,.7); line-height:1.8; max-width:620px; position:relative; z-index:1; }
+.slide-body strong { color:rgba(255,255,255,.92); }
+.slide-extra { margin-top:18px; position:relative; z-index:1; }
+/* Data boxes */
+.s-dg { display:grid; gap:10px; }
+.s-dg.c2 { grid-template-columns:1fr 1fr; }
+.s-dg.c3 { grid-template-columns:1fr 1fr 1fr; }
+.s-db { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.11); border-radius:9px; padding:13px 15px; }
+.s-dv { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:#6dd5c2; line-height:1; margin-bottom:3px; }
+.s-dl { font-size:11px; color:rgba(255,255,255,.55); font-family:'DM Mono',monospace; }
+.s-ds { font-size:11px; color:rgba(255,255,255,.4); margin-top:3px; }
+/* Bullet list */
+.s-ul { list-style:none; display:flex; flex-direction:column; gap:9px; }
+.s-ul li { display:flex; gap:10px; align-items:flex-start; font-size:13px; color:rgba(255,255,255,.75); line-height:1.5; }
+.sd { width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; flex-shrink:0; margin-top:1px; }
+.sd-t { background:rgba(13,110,95,.4); border:1px solid rgba(13,110,95,.6); color:#6dd5c2; }
+.sd-b { background:rgba(27,78,124,.4); border:1px solid rgba(27,78,124,.6); color:#90c4f0; }
+.sd-g { background:rgba(181,134,14,.35); border:1px solid rgba(181,134,14,.55); color:#f5cc5a; }
+.sd-r { background:rgba(139,26,26,.4); border:1px solid rgba(139,26,26,.6); color:#f5a0a0; }
+/* Case box */
+.s-case { background:rgba(181,134,14,.12); border:1px solid rgba(181,134,14,.28); border-left:3px solid #f5cc5a; border-radius:8px; padding:13px 16px; }
+.s-case-lbl { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:#f5cc5a; margin-bottom:5px; }
+.s-case p { font-size:12.5px; color:rgba(255,255,255,.78); line-height:1.6; }
+/* Algorithm steps */
+.s-algo { display:flex; flex-direction:column; gap:0; }
+.s-astep { display:flex; gap:12px; align-items:stretch; }
+.s-aleft { display:flex; flex-direction:column; align-items:center; width:32px; flex-shrink:0; }
+.s-anum { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:13px; font-weight:700; flex-shrink:0; }
+.sa-b { background:var(--hiv); color:#fff; }
+.sa-t { background:var(--teal); color:#fff; }
+.sa-g { background:rgba(181,134,14,.7); color:#fff; }
+.sa-r { background:var(--htn); color:#fff; }
+.s-aline { flex:1; width:2px; background:rgba(255,255,255,.12); margin:3px auto; }
+.s-astep:last-child .s-aline { display:none; }
+.s-acontent { flex:1; padding:5px 0 18px; }
+.s-acontent h4 { font-size:13px; font-weight:600; color:#fff; margin-bottom:2px; }
+.s-acontent p { font-size:11.5px; color:rgba(255,255,255,.65); line-height:1.55; }
+/* Slide counter & dots */
+.slide-counter { position:absolute; bottom:14px; right:18px; font-family:'DM Mono',monospace; font-size:11px; color:rgba(255,255,255,.35); z-index:2; }
+.slide-dots { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:2; }
+.sdot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.25); cursor:pointer; transition:all .2s; }
+.sdot.active { background:#6dd5c2; width:16px; border-radius:3px; }
+/* Controls bar */
+.slide-controls { padding:14px 20px; border-top:1px solid var(--rule); display:flex; align-items:center; gap:12px; background:var(--paper); }
+.sc-btn { width:36px; height:36px; border-radius:50%; border:1.5px solid var(--rule); background:var(--canvas); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ink-soft); transition:all .2s; flex-shrink:0; }
+.sc-btn:hover { background:var(--hiv-lt); border-color:var(--hiv); color:var(--hiv); }
+.sc-btn.play { background:var(--hiv); border-color:var(--hiv); color:#fff; width:42px; height:42px; font-size:16px; }
+.sc-btn.play:hover { background:#143d63; }
+.sc-prog { flex:1; height:4px; background:var(--rule); border-radius:2px; cursor:pointer; overflow:hidden; }
+.sc-fill { height:100%; background:linear-gradient(90deg,var(--hiv),var(--teal)); border-radius:2px; transition:width .3s ease; }
+.sc-time { font-family:'DM Mono',monospace; font-size:11.5px; color:var(--ink-muted); white-space:nowrap; }
+/* Notes box */
+.slide-notes { background:var(--canvas); border:1px solid var(--rule); border-radius:10px; padding:14px 18px; margin-bottom:18px; display:flex; gap:10px; align-items:flex-start; }
+.sn-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.sn-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-muted); margin-bottom:4px; }
+.sn-text { font-size:13px; color:var(--ink-soft); line-height:1.7; font-style:italic; }
+/* Key points strip */
+.lec-kp { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:18px; }
+.lkp { background:var(--paper); border-radius:10px; border:1px solid var(--rule); padding:16px; box-shadow:var(--shadow-sm); }
+.lkp-icon { font-size:20px; margin-bottom:8px; }
+.lkp h4 { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:5px; }
+.lkp p { font-size:12px; color:var(--ink-muted); line-height:1.55; }
+/* Quiz */
+.lec-quiz { background:var(--paper); border-radius:var(--r); border:1px solid var(--rule); box-shadow:var(--shadow-sm); padding:22px; margin-bottom:0; }
+.lec-quiz h3 { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; margin-bottom:14px; }
+.q-text { font-size:14px; color:var(--ink); margin-bottom:14px; line-height:1.55; }
+.q-opts { display:flex; flex-direction:column; gap:8px; }
+.qo { padding:11px 16px; border-radius:8px; border:1.5px solid var(--rule); background:var(--canvas); cursor:pointer; font-size:13.5px; color:var(--ink); transition:all .2s; display:flex; align-items:center; gap:10px; }
+.qo:hover { border-color:var(--hiv); background:var(--hiv-lt); }
+.qo.correct { background:#e5f2ef; border-color:var(--teal); color:var(--teal); pointer-events:none; }
+.qo.wrong { background:var(--htn-lt); border-color:var(--htn); color:var(--htn); pointer-events:none; }
+.qo.dim { pointer-events:none; opacity:.55; }
+.q-feedback { margin-top:14px; padding:13px 16px; border-radius:8px; font-size:13.5px; line-height:1.65; display:none; }
+.q-feedback.show { display:block; }
+.q-feedback.ok { background:#e5f2ef; border:1px solid var(--teal); color:#0a4535; }
+.q-feedback.bad { background:var(--htn-lt); border:1px solid var(--htn); color:#5a1010; }
+/* Responsive lecture */
+@media(max-width:860px) {
+  .lecture-shell { grid-template-columns:1fr; }
+  .lec-sidebar { position:static; }
+  .lec-kp { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:540px) {
+  .lec-kp { grid-template-columns:1fr; }
+  .slide-screen { padding:28px 24px; }
+  .s-dg.c2,.s-dg.c3 { grid-template-columns:1fr 1fr; }
+}
+
+/* ═══════════════════════════════
+   EMAIL REGISTRATION
+══════════════════════════════ */
+.reg-card { background:var(--ink); border-radius:var(--r); overflow:hidden; margin-bottom:28px; }
+.reg-inner { padding:28px 32px; display:grid; grid-template-columns:1fr 340px; gap:28px; align-items:center; }
+.reg-text h3 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:#fff; margin-bottom:8px; }
+.reg-text p { font-size:13.5px; color:rgba(255,255,255,.65); line-height:1.7; }
+.reg-form { display:flex; flex-direction:column; gap:10px; }
+.reg-row { display:flex; gap:8px; }
+.reg-input {
+  flex:1; padding:11px 14px;
+  border-radius:8px; border:1.5px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08); color:#fff;
+  font-size:13.5px; font-family:'Source Serif 4',serif;
+  outline:none; transition:border-color .2s;
+}
+.reg-input::placeholder { color:rgba(255,255,255,.4); }
+.reg-input:focus { border-color:#6dd5c2; }
+.reg-btn { padding:11px 20px; border-radius:8px; background:#6dd5c2; color:var(--ink); font-size:13px; font-weight:700; border:none; cursor:pointer; font-family:'DM Mono',monospace; white-space:nowrap; transition:background .2s; flex-shrink:0; }
+.reg-btn:hover { background:#a0ece3; }
+.reg-meta { font-size:11px; color:rgba(255,255,255,.38); font-family:'DM Mono',monospace; }
+.reg-success { display:none; text-align:center; padding:14px; background:rgba(13,110,95,.25); border-radius:8px; border:1px solid rgba(13,110,95,.45); color:#6dd5c2; font-size:13.5px; }
+@media(max-width:700px) {
+  .reg-inner { grid-template-columns:1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div>
+    <span>Newlands Clinic · Zimbabwe</span>
+    &nbsp;·&nbsp;
+    <a href="#">EMR Dashboard</a>
+    &nbsp;·&nbsp;
+    <a href="#">Patient Portal</a>
+    &nbsp;·&nbsp;
+    <a href="#">Pharmacy</a>
+  </div>
+  <div class="tb-live">
+    <div class="tb-dot"></div>
+    <span>Next digest: Apr 1, 2026</span>
+    &nbsp;·&nbsp;
+    <span class="tb-tag">Training Hub v1.0</span>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-noise"></div>
+  <div class="masthead-glow mg1"></div>
+  <div class="masthead-glow mg2"></div>
+  <div class="masthead-glow mg3"></div>
+  <div class="masthead-inner">
+    <div>
+      <div class="mh-eyebrow">Newlands Clinic · Clinical Training Programme</div>
+      <h1>HIV &amp; Hypertension<br/><em>Training Hub</em></h1>
+      <p class="masthead-desc">
+        A clinical knowledge platform purpose-built to combat treatment inertia —
+        combining visual guidelines, automated monthly literature updates, and
+        evidence-based training resources for frontline clinicians in Southern Africa.
+      </p>
+      <div class="mh-badges">
+        <span class="mh-badge mh-b1">📄 Visual Abstracts</span>
+        <span class="mh-badge mh-b2">❤️ HTN Guidelines</span>
+        <span class="mh-badge mh-b3">📬 Auto Literature Digest</span>
+        <span class="mh-badge mh-b4">🤖 AI Summaries</span>
+        <span class="mh-badge mh-b1">🎓 CME Lectures</span>
+      </div>
+    </div>
+    <div class="mh-stats">
+      <div class="mh-stat">
+        <div class="mh-stat-n">2</div>
+        <div class="mh-stat-l">Visual Abstracts</div>
+      </div>
+      <div class="mh-stat">
+        <div class="mh-stat-n">10</div>
+        <div class="mh-stat-l">Articles / Month</div>
+      </div>
+      <div class="mh-stat">
+        <div class="mh-stat-n">$0</div>
+        <div class="mh-stat-l">Monthly Cost</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-tab active" onclick="showTab('overview')"><span class="nav-icon">◈</span> Overview</div>
+    <div class="nav-tab" onclick="showTab('lectures')"><span class="nav-icon">🎓</span> CME Lectures</div>
+    <div class="nav-tab" onclick="showTab('abstracts')"><span class="nav-icon">◻</span> Visual Abstracts</div>
+    <div class="nav-tab" onclick="showTab('digest')"><span class="nav-icon">◉</span> Literature Digest</div>
+    <div class="nav-tab" onclick="showTab('sop')"><span class="nav-icon">≡</span> SOP &amp; Guidelines</div>
+    <div class="nav-tab" onclick="showTab('system')"><span class="nav-icon">⊙</span> How It Works</div>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ══ OVERVIEW ══ -->
+<section id="overview" class="section active">
+
+  <div class="ov-hero">
+    <div class="ov-hero-content">
+      <h2>Tackling <span>Treatment Inertia</span> in HIV &amp; Hypertension Care</h2>
+      <p>
+        People living with HIV on suppressed ART can have <strong>better blood pressure and glucose control</strong>
+        than HIV-negative adults — yet clinicians often lack access to this evidence. This platform
+        delivers two practical, zero-cost tools to bridge the knowledge gap at the point of care.
+      </p>
+      <div class="ov-cta">
+        <button class="btn btn-teal" onclick="showTab('abstracts')">📄 View Visual Abstracts</button>
+        <button class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showTab('digest')">📬 Browse Literature Digest</button>
+        <button class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showTab('system')">⚙ System Architecture</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-box alert-problem">
+    <div class="al-icon">⚠</div>
+    <div>
+      <h4>The Problem — Treatment Inertia</h4>
+      <p>Clinicians in busy Southern African settings face a <strong>dual epidemic</strong> — managing HIV
+      alongside rapidly rising rates of hypertension and diabetes in the same patients.
+      Complex SOPs in lengthy PDFs are rarely consulted during consultations,
+      and there is no structured mechanism to keep frontline staff updated with the latest evidence.</p>
+    </div>
+  </div>
+
+  <div class="alert-box alert-solution">
+    <div class="al-icon">✓</div>
+    <div>
+      <h4>Our Two-Part Solution</h4>
+      <p>
+        <strong>Solution 1 — Visual Abstracts:</strong> SOPs and landmark research papers are distilled into
+        rich, colour-coded, one-page visual summaries viewable in under two minutes, designed to sit
+        directly within the EMR. &nbsp;&nbsp;<strong>Solution 2 — Automated Literature Digest:</strong>
+        PubMed is searched monthly by an automated pipeline; AI generates plain-language summaries
+        contextualised for Southern African practice and delivers them to clinicians' inboxes on the
+        1st of each month — at zero cost.
+      </p>
+    </div>
+  </div>
+
+  <div class="ov-cards">
+    <div class="card ov-card" onclick="showTab('abstracts')">
+      <div class="ov-card-num">01</div>
+      <h3>Visual Abstracts</h3>
+      <p>Clear, colour-coded one-page summaries of the Hypertension SOP and key research papers, designed for rapid clinical reference at the point of care.</p>
+      <div class="ov-link">Explore abstracts <span>→</span></div>
+    </div>
+    <div class="card ov-card" onclick="showTab('digest')">
+      <div class="ov-card-num">02</div>
+      <h3>Monthly Literature Digest</h3>
+      <p>Ten curated PubMed articles on HIV + hypertension, AI-summarised in plain language with clinical takeaways, emailed automatically every month.</p>
+      <div class="ov-link">Browse digest <span>→</span></div>
+    </div>
+    <div class="card ov-card" onclick="showTab('sop')">
+      <div class="ov-card-num">03</div>
+      <h3>SOP &amp; Guidelines</h3>
+      <p>The Newlands Clinic Hypertension SOP alongside key clinical reference points for managing HTN in PLHIV, all in one place.</p>
+      <div class="ov-link">View guidelines <span>→</span></div>
+    </div>
+  </div>
+
+  <!-- AI Instructor feature banner -->
+  <div style="background:linear-gradient(135deg,#0d1b2a,#1b4e7c 60%,#0d6e5f);border-radius:var(--r);padding:28px 32px;display:flex;align-items:center;gap:20px;margin-top:0;">
+    <div style="font-size:38px;flex-shrink:0;">🎓</div>
+    <div style="flex:1;">
+      <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:#7db3d6;margin-bottom:6px;">New Feature</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;">AI Clinical Instructor — Video Lectures + Live AI Tutor</h3>
+      <p style="font-size:13.5px;color:rgba(255,255,255,.68);line-height:1.65;">6 structured lecture modules on HIV comorbidity management, plus a live AI tutor (Dr. Noma) that answers clinical questions in real time — powered by Claude AI.</p>
+    </div>
+    <a href="ai_instructor.html" style="text-decoration:none;flex-shrink:0;">
+      <button style="background:#6dd5c2;color:#0d1b2a;padding:12px 24px;border-radius:8px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap;">Launch AI Instructor →</button>
+    </a>
+  </div>
+
+</section>
+
+<!-- ══ CME LECTURES ══ -->
+<section id="lectures" class="section">
+
+  <div class="sec-hdr">
+    <div class="sec-icon si-gold">🎓</div>
+    <div>
+      <h2>CME Lecture Modules — HIV &amp; Comorbidities</h2>
+      <p>Slide-based clinical lectures with an AI avatar instructor · Navigate slides · Ask questions live · Self-assess with quizzes</p>
+    </div>
+  </div>
+
+  <div class="lecture-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="lec-sidebar">
+      <div class="lec-panel">
+        <div class="lec-panel-head"><span>📚 Modules</span></div>
+        <button class="mod-btn active" onclick="loadMod(0,this)">
+          <div class="mb-inner"><div class="mb-num" id="mn0">1</div>
+          <div class="mb-info"><h4>NCDs &amp; HIV — The Dual Burden</h4><p>Background · ART &amp; comorbidities</p></div></div>
+        </button>
+        <button class="mod-btn" onclick="loadMod(1,this)">
+          <div class="mb-inner"><div class="mb-num" id="mn1">2</div>
+          <div class="mb-info"><h4>Hypertension in PLHIV</h4><p>Classification · Diagnosis · Tx</p></div></div>
+        </button>
+        <button class="mod-btn" onclick="loadMod(2,this)">
+          <div class="mb-inner"><div class="mb-num" id="mn2">3</div>
+          <div class="mb-info"><h4>Diabetes Mellitus in PLHIV</h4><p>Diagnosis · Management · Drugs</p></div></div>
+        </button>
+      </div>
+      <div class="lec-panel">
+        <div class="lec-panel-head"><span>📊 Progress</span></div>
+        <div class="lec-progress">
+          <div class="lp-row"><span>Completion</span><span id="progPct">0%</span></div>
+          <div class="lp-track"><div class="lp-bar" id="progBar"></div></div>
+          <div style="font-size:11px;color:var(--ink-muted);margin-top:8px;font-family:'DM Mono',monospace;" id="progLabel">0 of 3 modules viewed</div>
+        </div>
+      </div>
+      <div class="lec-panel">
+        <div class="lec-panel-head"><span>📖 Source</span></div>
+        <div style="padding:12px 14px;font-size:11.5px;color:var(--ink-muted);line-height:1.65;">
+          Based on <strong style="color:var(--ink-soft);">HIV and Comorbidities</strong> lecture series · Newlands Clinic Zimbabwe · EDLIZ 2020 · WHO HIV Guidelines 2024
+        </div>
+      </div>
+    </aside>
+
+    <!-- STAGE -->
+    <div class="lec-stage">
+
+      <!-- AVATAR + SLIDE SPLIT -->
+      <div class="av-stage">
+
+        <!-- Avatar panel -->
+        <div class="av-panel" id="avPanel">
+          <div class="av-inner">
+            <div class="av-face" id="avFace">
+              <div class="av-head">
+                <div class="av-circle">
+                  <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+                    <circle cx="40" cy="30" r="18" fill="#f4c89a"/>
+                    <ellipse cx="40" cy="72" rx="26" ry="20" fill="#1b4e7c"/>
+                    <rect x="30" y="46" width="20" height="16" rx="4" fill="#f4c89a"/>
+                    <circle cx="33" cy="28" r="3" fill="#5a3210"/>
+                    <circle cx="47" cy="28" r="3" fill="#5a3210"/>
+                    <path d="M 34 36 Q 40 41 46 36" stroke="#5a3210" stroke-width="1.5" fill="none" id="avMouth"/>
+                    <rect x="26" y="55" width="28" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                    <text x="40" y="69" text-anchor="middle" font-size="7" fill="white" font-family="serif" font-weight="bold">Dr. Noma</text>
+                  </svg>
+                </div>
+                <div class="av-rings">
+                  <div class="av-ring r1"></div>
+                  <div class="av-ring r2"></div>
+                </div>
+              </div>
+              <div class="av-name">Dr. Noma</div>
+              <div class="av-title">AI Clinical Instructor</div>
+              <div class="av-status" id="avStatus">
+                <span class="av-dot"></span><span id="avStatusText">Ready</span>
+              </div>
+            </div>
+            <!-- Speech bubble -->
+            <div class="av-bubble" id="avBubble">
+              <div class="ab-text" id="avText">Welcome! I'm Dr. Noma, your AI clinical instructor. Select a module from the sidebar to begin, or use the slide controls below. You can also ask me any clinical question using the chat.</div>
+            </div>
+          </div>
+          <!-- Chat input -->
+          <div class="av-chat">
+            <div class="av-chat-label">💬 Ask Dr. Noma</div>
+            <div class="av-chat-row">
+              <textarea class="av-input" id="avInput" placeholder="Ask a clinical question..." rows="1"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();askAvatar();}"
+                oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
+              <button class="av-send" id="avSend" onclick="askAvatar()">➤</button>
+            </div>
+            <div style="font-size:10.5px;color:var(--ink-muted);margin-top:5px;font-family:'DM Mono',monospace;">Enter to send · Shift+Enter new line · Powered by Claude AI</div>
+          </div>
+        </div>
+
+        <!-- Slide panel -->
+        <div class="slide-half">
+          <div class="slide-player">
+            <div class="slide-screen" id="slideScreen">
+              <div class="ss-glow1"></div><div class="ss-glow2"></div>
+              <div id="slideContent" style="position:relative;z-index:1;"></div>
+              <div class="slide-dots" id="slideDots"></div>
+              <div class="slide-counter" id="slideCounter"></div>
+            </div>
+            <div class="slide-controls">
+              <button class="sc-btn" onclick="prevSlide()" title="Previous">&#9664;</button>
+              <button class="sc-btn play" id="playBtn" onclick="togglePlay()" title="Auto-advance">&#9654;</button>
+              <button class="sc-btn" onclick="nextSlide()" title="Next">&#9654;&#9654;</button>
+              <div class="sc-prog" id="scProg" onclick="seekBar(event)">
+                <div class="sc-fill" id="scFill"></div>
+              </div>
+              <div class="sc-time" id="scTime">Slide 1 / 1</div>
+            </div>
+          </div>
+          <!-- Notes -->
+          <div class="slide-notes" id="slideNotes">
+            <div class="sn-icon">📝</div>
+            <div><div class="sn-label">Lecture Notes</div>
+            <div class="sn-text" id="sn-text">Select a module to begin.</div></div>
+          </div>
+        </div>
+      </div><!-- /av-stage -->
+
+      <!-- KEY POINTS -->
+      <div class="lec-kp" id="lecKP" style="display:none;"></div>
+
+      <!-- QUIZ -->
+      <div class="lec-quiz" id="lecQuiz" style="display:none;">
+        <h3>📝 Self-Assessment</h3>
+        <div id="quizContent"></div>
+      </div>
+
+    </div><!-- /lec-stage -->
+  </div><!-- /lecture-shell -->
+
+</section>
+
+
+<section id="abstracts" class="section">
+
+  <div class="sec-hdr">
+    <div class="sec-icon si-blue">📄</div>
+    <div>
+      <h2>Visual Abstracts</h2>
+      <p>Rich, evidence-based one-page visual summaries for clinical training and rapid point-of-care reference</p>
+    </div>
+  </div>
+
+  <div class="va-grid">
+    <div class="card va-card">
+      <div class="va-card-stripe vs-hiv"></div>
+      <div class="va-body">
+        <div class="va-kind vk-sop">SOP Visual Abstract</div>
+        <h3>Management of Hypertension at Newlands Clinic</h3>
+        <div class="va-meta">SOP v1.24 · March 2026 · Newlands Clinic, Zimbabwe</div>
+      </div>
+      <div class="va-thumb">
+        <div class="va-thumb-icon">📊</div>
+        <div class="va-thumb-label">LANDSCAPE SVG · 1400 × 900px</div>
+        <div class="va-thumb-sub">BP Classification · Treatment Algorithm · Drug Classes · Special Populations</div>
+      </div>
+      <div class="va-foot">
+        <div class="tag-row">
+          <span class="tag">Hypertension</span>
+          <span class="tag">SOP</span>
+          <span class="tag">Algorithm</span>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openModal('m-sop')">View Full Abstract</button>
+      </div>
+    </div>
+
+    <div class="card va-card">
+      <div class="va-card-stripe vs-htn"></div>
+      <div class="va-body">
+        <div class="va-kind vk-research">Research Paper Visual Abstract</div>
+        <h3>Hypertension &amp; Diabetes Control Along the HIV Care Cascade in Rural South Africa</h3>
+        <div class="va-meta">Manne-Goehler J et al. · J Int AIDS Soc · 2019 · PMID: 30916897</div>
+      </div>
+      <div class="va-thumb">
+        <div class="va-thumb-icon">🔬</div>
+        <div class="va-thumb-label">HAALSI COHORT · 5,059 ADULTS · RURAL SA</div>
+        <div class="va-thumb-sub">Introduction · Methods · HIV Cascade · Results · Conclusions</div>
+      </div>
+      <div class="va-foot">
+        <div class="tag-row">
+          <span class="tag">HIV Cascade</span>
+          <span class="tag">HAALSI</span>
+          <span class="tag">PMID 30916897</span>
+        </div>
+        <button class="btn btn-teal btn-sm" onclick="openModal('m-paper')">View Full Abstract</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card va-explainer">
+    <h3>How These Visual Abstracts Were Created</h3>
+    <div class="step-flow">
+      <div class="step-box">
+        <div class="step-circle">1</div>
+        <h4>Source Document</h4>
+        <p>SOP PDF or PubMed article abstract identified as clinically relevant for Southern African practice</p>
+      </div>
+      <div class="step-box">
+        <div class="step-circle">2</div>
+        <h4>AI Extraction</h4>
+        <p>Claude AI reads the full content, extracts key data, statistics, classifications and recommendations</p>
+      </div>
+      <div class="step-box">
+        <div class="step-circle">3</div>
+        <h4>SVG Design</h4>
+        <p>Converted to a rich colour-coded landscape SVG following IMRaD structure for research papers</p>
+      </div>
+      <div class="step-box">
+        <div class="step-circle">4</div>
+        <h4>Published Here</h4>
+        <p>Embedded in this training hub for instant clinician access and used in training presentations</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ LITERATURE DIGEST ══ -->
+<section id="digest" class="section">
+
+  <div class="sec-hdr">
+    <div class="sec-icon si-teal">📬</div>
+    <div>
+      <h2>Monthly Literature Digest</h2>
+      <p>Automated PubMed search · AI-generated summaries · Delivered 1st of every month · Zero cost</p>
+    </div>
+  </div>
+
+  <!-- EMAIL REGISTRATION -->
+  <div class="reg-card">
+    <div class="reg-inner">
+      <div class="reg-text">
+        <h3>📧 Subscribe to the Monthly Digest</h3>
+        <p>Receive 10 curated HIV &amp; hypertension articles with AI-generated plain-language summaries, delivered to your inbox on the 1st of every month. Free. No spam. Unsubscribe anytime.</p>
+      </div>
+      <div class="reg-form" id="regForm">
+        <input class="reg-input" id="regName" type="text" placeholder="Your name (optional)"/>
+        <div class="reg-row">
+          <input class="reg-input" id="regEmail" type="email" placeholder="your@email.com"/>
+          <button class="reg-btn" onclick="registerEmail()">Subscribe →</button>
+        </div>
+        <div class="reg-meta">📅 Next issue: April 1, 2026 · 🔒 Email used only for this digest · Unsubscribe anytime</div>
+      </div>
+      <div class="reg-success" id="regSuccess">✅ You're subscribed! Watch for your first digest on April 1, 2026.</div>
+    </div>
+  </div>
+
+  <div class="digest-banner">
+    <div class="db-left">
+      <h3>March 2026 · HIV &amp; Hypertension Literature Digest</h3>
+      <p>This month's top 10 articles from PubMed on HIV, hypertension and cardiovascular disease
+      management in sub-Saharan Africa, with AI-generated plain-language summaries.</p>
+      <div class="db-cta">
+        <button class="btn btn-teal btn-sm">📧 Subscribe to Digest</button>
+        <button class="btn btn-ghost btn-sm" style="border-color:rgba(255,255,255,.4);color:#fff;">📥 Download PDF</button>
+      </div>
+    </div>
+    <div class="db-stats">
+      <div class="dstat"><div class="dstat-n">10</div><div class="dstat-l">Articles</div></div>
+      <div class="dstat"><div class="dstat-n">3</div><div class="dstat-l">Searches</div></div>
+      <div class="dstat"><div class="dstat-n">AI</div><div class="dstat-l">Summaries</div></div>
+      <div class="dstat"><div class="dstat-n">35d</div><div class="dstat-l">Lookback</div></div>
+    </div>
+  </div>
+
+  <div class="digest-layout">
+    <div class="art-list">
+
+      <div class="card art-card">
+        <div class="art-top">
+          <span class="art-kicker">HIV + HTN</span>
+          <span class="art-journal">J Int AIDS Soc · 2026</span>
+        </div>
+        <h4>Longitudinal care cascade for hypertension in people with and without HIV in South Africa</h4>
+        <p class="art-summary">
+          This clinic-based cohort study tracks hypertension care engagement over 24 months in
+          South African primary care facilities serving both PLHIV and HIV-negative patients.
+          PLHIV enrolled in ART programmes were significantly more likely to have BP measured,
+          receive a hypertension diagnosis, and be initiated on antihypertensive therapy.
+          <span class="art-takeaway"> Clinical takeaway: ART clinics present an underutilised platform for hypertension integration — consider routine BP measurement at every ART visit without waiting for the patient to report symptoms.</span>
+        </p>
+        <div class="art-foot">
+          <span class="art-authors">Gumede S, Manne-Goehler J, Oladimeji E et al.</span>
+          <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank"><button class="btn btn-ghost btn-sm">PubMed →</button></a>
+        </div>
+      </div>
+
+      <div class="card art-card">
+        <div class="art-top">
+          <span class="art-kicker">ART + Cardiovascular</span>
+          <span class="art-journal">JAIDS · 2026</span>
+        </div>
+        <h4>Risk of Major Adverse Cardiovascular Events With Dolutegravir-Based vs Efavirenz-Based ART</h4>
+        <p class="art-summary">
+          A comparative cohort study across sub-Saharan African clinics examining MACE outcomes
+          in PLHIV on DTG- versus EFV-based first-line regimens. DTG showed no increased
+          cardiovascular risk compared to EFV, while achieving superior viral suppression rates
+          at 12 and 24 months follow-up.
+          <span class="art-takeaway"> Clinical takeaway: Modern DTG-based first-line ART is both virologically superior and cardiovascularly safe — clinicians need not add cardiovascular monitoring burden when switching patients to DTG.</span>
+        </p>
+        <div class="art-foot">
+          <span class="art-authors">Siedner MJ, Bärnighausen T, Orrell C et al.</span>
+          <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank"><button class="btn btn-ghost btn-sm">PubMed →</button></a>
+        </div>
+      </div>
+
+      <div class="card art-card">
+        <div class="art-top">
+          <span class="art-kicker">Integration · Zimbabwe</span>
+          <span class="art-journal">Lancet Global Health · 2026</span>
+        </div>
+        <h4>Nurse-led hypertension management integrated into HIV clinics in rural Zimbabwe: cluster RCT</h4>
+        <p class="art-summary">
+          Cluster randomised trial testing a nurse-led, protocol-driven hypertension programme
+          integrated into existing HIV clinics across five rural Zimbabwean districts.
+          The intervention achieved significant improvements in BP control at 12 months
+          (62% vs 34% controlled, p&lt;0.001) with no adverse impact on HIV outcomes.
+          <span class="art-takeaway"> Clinical takeaway: Nurse-led integrated HTN management in HIV clinics is feasible and highly effective in rural Zimbabwe — a model directly replicable at Newlands Clinic with existing staff and infrastructure.</span>
+        </p>
+        <div class="art-foot">
+          <span class="art-authors">Musuka G, Murewanhema G, Dzinamarira T et al.</span>
+          <a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank"><button class="btn btn-ghost btn-sm">PubMed →</button></a>
+        </div>
+      </div>
+
+      <div class="art-more">
+        <button class="btn btn-primary">Load Remaining 7 Articles</button>
+        <p>7 more articles in this month's digest · Fetched from PubMed via automated pipeline</p>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="card sb-card">
+        <h4>Search Terms Used</h4>
+        <ul class="sb-list">
+          <li>🔍 HIV hypertension management Africa</li>
+          <li>🔍 Antiretroviral therapy cardiovascular Africa</li>
+          <li>🔍 Hypertension treatment sub-Saharan Africa</li>
+        </ul>
+      </div>
+
+      <div class="card sb-card">
+        <h4>Digest Schedule</h4>
+        <div class="sb-row"><span class="sb-label">Frequency</span><span class="sb-value">Monthly</span></div>
+        <div class="sb-row"><span class="sb-label">Sends on</span><span class="sb-value">1st, 07:00 UTC</span></div>
+        <div class="sb-row"><span class="sb-label">Articles</span><span class="sb-value">Top 10</span></div>
+        <div class="sb-row"><span class="sb-label">Lookback</span><span class="sb-value">35 days</span></div>
+        <div class="sb-row"><span class="sb-label">AI engine</span><span class="sb-value">Gemini 1.5 Flash</span></div>
+        <div class="sb-row"><span class="sb-label">Next send</span><span class="sb-value active">Apr 1, 2026</span></div>
+      </div>
+
+      <div class="card sb-card">
+        <h4>How It's Automated</h4>
+        <p class="sb-explain">
+          A Python script runs automatically on GitHub Actions every 1st of the month.
+          It queries the free PubMed API, gets AI summaries from Gemini,
+          and sends a formatted HTML email digest to all subscribers.
+          Total cost: <strong>$0/month.</strong>
+        </p>
+        <button class="btn btn-ghost btn-sm" onclick="showTab('system')">Technical details →</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ SOP & GUIDELINES ══ -->
+<section id="sop" class="section">
+
+  <div class="sec-hdr">
+    <div class="sec-icon si-red">📋</div>
+    <div>
+      <h2>SOP &amp; Clinical Guidelines</h2>
+      <p>Newlands Clinic standard operating procedures and key evidence-based reference points</p>
+    </div>
+  </div>
+
+  <div class="sop-grid">
+    <div class="card sop-card">
+      <div class="sop-head">
+        <div class="sop-ver">SOP v1.24 · Updated March 2026</div>
+        <h3>Management of Hypertension at Newlands Clinic</h3>
+        <p>BP measurement &amp; classification (Normal → Stage 3), diagnosis criteria, baseline investigations by age group, non-pharmacological management (DASH, exercise, sodium), pharmacological step-up therapy, hypertensive crises (urgency vs emergency), special populations (CKD, pregnancy, elderly &gt;80), follow-up schedule and 6 auditable quality indicators.</p>
+      </div>
+      <div class="sop-refs">
+        <strong>References:</strong> EDLIZ 2020 · SA National HTN Guidelines 2021 · AHA 2018 · ESC/ESH 2018
+      </div>
+      <div class="sop-foot">
+        <button class="btn btn-primary btn-sm" onclick="openModal('m-sop')">View Visual Abstract</button>
+        <button class="btn btn-ghost btn-sm">Download SOP PDF</button>
+      </div>
+    </div>
+
+    <div class="card sop-card">
+      <div class="sop-head">
+        <div class="sop-ver">Research Evidence · PMID 30916897 · Open Access</div>
+        <h3>HTN &amp; Diabetes in PLHIV: HAALSI Cohort Evidence</h3>
+        <p>Population-based cohort (n=5,059 adults &gt;40 years, rural South Africa, Nov 2014–2015). PLHIV on ART with undetectable viral load: 18% greater HTN awareness (aRR 1.18, CI 1.09–1.28), 24% greater HTN treatment uptake (aRR 1.24, CI 1.10–1.41), lower mean SBP (−5.98 mmHg) and lower blood glucose (−3.77 mmol/L) vs HIV-negative adults.</p>
+      </div>
+      <div class="sop-refs">
+        <strong>Journal:</strong> J Int AIDS Soc 2019;22(3):e25213 · PMCID: PMC6436499 · Free full text
+      </div>
+      <div class="sop-foot">
+        <button class="btn btn-teal btn-sm" onclick="openModal('m-paper')">View Visual Abstract</button>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/30916897/" target="_blank">
+          <button class="btn btn-ghost btn-sm">PubMed →</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card kp-panel">
+    <h3>Key Clinical Points for Frontline Clinicians</h3>
+    <div class="kp-grid">
+      <div class="kp-item">
+        <div class="kp-icon">💊</div>
+        <h4>Stage 1 HTN (140–159 / 90–99 mmHg)</h4>
+        <p>Start monotherapy. First choice: Amlodipine 10 mg od (CCB) for most. ACE/ARB preferred if DM or CKD present.</p>
+      </div>
+      <div class="kp-item">
+        <div class="kp-icon">💊💊</div>
+        <h4>Stage 2 &amp; 3 HTN (≥160 / ≥100 mmHg)</h4>
+        <p>Start dual therapy immediately: Amlodipine 10 mg + Losartan 50 mg od. Weekly BP checks until controlled.</p>
+      </div>
+      <div class="kp-item">
+        <div class="kp-icon">🚨</div>
+        <h4>Hypertensive Urgency</h4>
+        <p>SBP &gt;160 / DBP &gt;110, no end-organ damage: stat Nifedipine 40 mg po. Recheck 1 hour. Refer if still elevated.</p>
+      </div>
+      <div class="kp-item">
+        <div class="kp-icon">🔬</div>
+        <h4>ART as NCD Platform</h4>
+        <p>PLHIV on suppressed ART may have lower SBP and glucose than HIV-negative peers. Use every ART visit for NCD screening.</p>
+      </div>
+      <div class="kp-item">
+        <div class="kp-icon">⛔</div>
+        <h4>Do NOT Combine</h4>
+        <p>Never co-prescribe ACE inhibitor (Enalapril) + ARB (Losartan). Choose one class — combining causes dangerous hyperkalaemia.</p>
+      </div>
+      <div class="kp-item">
+        <div class="kp-icon">📅</div>
+        <h4>Follow-Up Schedule</h4>
+        <p>New / poorly controlled: weekly BP + monthly review. Controlled ≥1 year: 6-monthly supply, sync with ART refill visits.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section id="system" class="section">
+
+  <div class="sec-hdr">
+    <div class="sec-icon si-gold">⚙</div>
+    <div>
+      <h2>How It Works — System Architecture</h2>
+      <p>The complete automated pipeline from PubMed database to clinician inbox, and how visual abstracts are generated</p>
+    </div>
+  </div>
+
+  <div class="flow-wrap">
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="flow-circle">1</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <div class="card">
+          <h3>GitHub Actions Scheduler — Triggers on 1st of Every Month</h3>
+          <p>A YAML workflow file in the repository (<code>.github/workflows/monthly_digest.yml</code>)
+          fires the Python script at 07:00 UTC on the 1st of each month using a cron trigger. The entire
+          workflow runs in a free GitHub-hosted Ubuntu runner — no servers to manage or pay for.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">GitHub Actions</span>
+            <span class="tech-tag">cron: '0 7 1 * *'</span>
+            <span class="tech-tag">Ubuntu runner</span>
+            <span class="tech-tag">Free tier</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="flow-circle">2</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <div class="card">
+          <h3>PubMed E-Utilities API — Fetches Latest Articles</h3>
+          <p>The Python script queries the free PubMed API (NCBI E-Utilities) using 3 targeted search terms.
+          It searches the last 35 days, deduplicates results, fetches titles, abstracts, authors and journal
+          details for the top 10 unique articles. Rate limiting is handled with 1-second delays between requests.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">NCBI E-Utilities (free)</span>
+            <span class="tech-tag">esearch + efetch</span>
+            <span class="tech-tag">XML parsing</span>
+            <span class="tech-tag">Deduplication</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="flow-circle">3</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <div class="card">
+          <h3>Gemini 1.5 Flash — Generates Plain-Language Summaries</h3>
+          <p>Each abstract is sent to Google's Gemini API with a carefully crafted prompt requesting a
+          3–5 sentence plain-language summary plus a "Clinical takeaway:" line specifically contextualised
+          for Southern African clinical practice. The free tier allows 1,500 requests/day — the digest
+          uses only 10.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Gemini 1.5 Flash</span>
+            <span class="tech-tag">Google AI Studio (free)</span>
+            <span class="tech-tag">Prompt engineering</span>
+            <span class="tech-tag">JSON response parsing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="flow-circle">4</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <div class="card">
+          <h3>Gmail SMTP — Formatted HTML Digest Delivered to Inbox</h3>
+          <p>A professionally formatted HTML email is assembled with article cards, AI summaries,
+          and "Read on PubMed" links. It is sent via Gmail SMTP using an App Password
+          (16-character code generated in Google Account security settings, stored as a GitHub Secret).
+          Works for unlimited recipients.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Gmail SMTP (free)</span>
+            <span class="tech-tag">App Password auth</span>
+            <span class="tech-tag">HTML email template</span>
+            <span class="tech-tag">GitHub Secrets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="flow-circle">5</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <div class="card">
+          <h3>Visual Abstracts — AI-Powered SVG Generation</h3>
+          <p>SOP documents and PubMed articles are fed to Claude AI, which reads the full content,
+          extracts all key clinical data and statistics, then generates rich landscape SVG visual
+          abstracts. Research paper abstracts follow IMRaD structure (Introduction, Methods, Results,
+          Discussion). These SVGs are embedded directly in this training hub.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Claude AI (Anthropic)</span>
+            <span class="tech-tag">SVG generation</span>
+            <span class="tech-tag">IMRaD structure</span>
+            <span class="tech-tag">Point-of-care design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="flow-circle">6</div>
+      </div>
+      <div class="flow-content">
+        <div class="card">
+          <h3>This Training Hub — Hosted on GitHub Pages (Free)</h3>
+          <p>This website is a single-file HTML application that can be hosted for free on GitHub Pages,
+          or embedded as an iframe within the clinic's existing EMR system. No backend server, no database,
+          no maintenance. All content is hardcoded or loaded from public APIs.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Static HTML/CSS/JS</span>
+            <span class="tech-tag">GitHub Pages (free)</span>
+            <span class="tech-tag">EMR iframe-embeddable</span>
+            <span class="tech-tag">No backend needed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Required GitHub Secrets -->
+  <div class="card" style="padding:26px 28px; margin-bottom:24px;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin-bottom:18px;">Required GitHub Secrets (Settings → Secrets → Actions)</h3>
+    <div class="code-panel">
+<span class="c-comment"># Add these 4 secrets to your GitHub repository before running the workflow</span>
+
+GEMINI_API_KEY    <span class="c-str">→  From aistudio.google.com  (starts with AIza...)</span>
+EMAIL_SENDER      <span class="c-str">→  Your Gmail address        (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d6e787379786f5d7a707c7471337e7270">[email&#160;protected]</a>)</span>
+EMAIL_PASSWORD    <span class="c-str">→  Gmail App Password        (16 chars, no spaces)</span>
+EMAIL_RECIPIENTS  <span class="c-str">→  Comma-separated emails    (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1d79727e2c5d7e717473747e337e7270">[email&#160;protected]</a>,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="482c272b7a082b242126212b662b2725">[email&#160;protected]</a>)</span>
+    </div>
+  </div>
+
+  <!-- Cost breakdown -->
+  <div class="card" style="padding:26px 28px;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin-bottom:22px;">Total Monthly Cost — Everything Runs Free</h3>
+    <div class="cost-grid">
+      <div class="cost-item">
+        <div class="cost-free">$0</div>
+        <h4>PubMed API</h4>
+        <p>Completely free, no API key needed. NCBI E-Utilities are publicly available.</p>
+      </div>
+      <div class="cost-item">
+        <div class="cost-free">$0</div>
+        <h4>GitHub Actions</h4>
+        <p>Free tier: 2,000 min/month. Each digest run uses ~2 minutes.</p>
+      </div>
+      <div class="cost-item">
+        <div class="cost-free">$0</div>
+        <h4>Gemini AI</h4>
+        <p>Free tier: 1,500 requests/day. Digest uses 10 per month.</p>
+      </div>
+      <div class="cost-item">
+        <div class="cost-free">$0</div>
+        <h4>Gmail SMTP</h4>
+        <p>Free with App Password. Sends to unlimited recipients.</p>
+      </div>
+      <div class="cost-item">
+        <div class="cost-free">$0</div>
+        <h4>GitHub Pages</h4>
+        <p>Free static hosting. This entire site deploys from your repository.</p>
+      </div>
+      <div class="cost-item" style="background:var(--teal-lt);border-color:#a8d8ce;">
+        <div class="cost-free" style="color:var(--teal);">$0</div>
+        <h4>Total Monthly Cost</h4>
+        <p>The complete system — search, AI, email, hosting — at zero recurring cost.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+</div><!-- /page -->
+
+<!-- FOOTER -->
+<footer>
+  <strong>Newlands Clinic · HIV &amp; Hypertension Training Hub</strong><br/>
+  Developed to address treatment inertia in Southern African clinical practice<br/>
+  Literature summaries sourced from <a href="https://pubmed.ncbi.nlm.nih.gov">PubMed</a> ·
+  Visual abstracts generated by Claude AI ·
+  Always verify clinical decisions against full guidelines and primary literature<br/>
+  <span style="opacity:.45;">For clinical training use only · Not for patient self-management · v1.0 · 2026</span>
+</footer>
+
+<!-- MODAL: SOP -->
+<div class="modal-overlay" id="m-sop" onclick="closeOut(event,'m-sop')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div>
+        <h3>Hypertension SOP — Visual Abstract</h3>
+        <p>Newlands Clinic · SOP v1.24 · 2026 · Landscape SVG 1400×900px</p>
+      </div>
+      <div class="modal-close" onclick="closeModal('m-sop')">✕</div>
+    </div>
+    <div class="modal-body">
+      <!-- The SVG embeds inline here. Replace the placeholder with the actual SVG file reference -->
+      <div class="modal-placeholder">
+        <div class="mp-icon">📊</div>
+        <h4>Hypertension SOP Visual Abstract</h4>
+        <p>Covers all 7 clinical sections: BP Classification table, Non-Pharmacological Management,
+        Pharmacological Treatment Algorithm, Drug Classes reference, Hypertensive Crises,
+        Special Populations, and Follow-Up &amp; Auditable Standards.</p>
+        <p style="margin-top:12px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink-muted);">
+          To display: place <code>hypertension_sop_visual_abstract.svg</code> in the same folder
+          and replace this block with:<br/><code>&lt;img src="hypertension_sop_visual_abstract.svg" style="width:100%"/&gt;</code>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Research Paper -->
+<div class="modal-overlay" id="m-paper" onclick="closeOut(event,'m-paper')">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div>
+        <h3>HAALSI Cohort — Research Paper Visual Abstract</h3>
+        <p>Manne-Goehler J et al. · J Int AIDS Soc 2019 · PMID: 30916897</p>
+      </div>
+      <div class="modal-close" onclick="closeModal('m-paper')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-placeholder">
+        <div class="mp-icon">🔬</div>
+        <h4>HIV Care Cascade &amp; Cardiometabolic Outcomes</h4>
+        <p>Full visual abstract covers Introduction &amp; Background, Methods (HAALSI n=5,059),
+        HIV Care Cascade exposure groups, Results (aRR 1.18 HTN awareness; aRR 1.24 HTN treatment;
+        SBP ↓5.98 mmHg; Glucose ↓3.77 mmol/L), and Conclusions &amp; Clinical Implications.</p>
+        <p style="margin-top:12px;font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink-muted);">
+          To display: place <code>manne_goehler_2019_visual_abstract_v2.svg</code> in the same folder
+          and replace this block with:<br/><code>&lt;img src="manne_goehler_2019_visual_abstract_v2.svg" style="width:100%"/&gt;</code>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ─── TAB NAVIGATION ─── */
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const map = {overview:0, lectures:1, abstracts:2, digest:3, sop:4, system:5};
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-tab')[map[id]]?.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+function closeOut(e,id) { if(e.target===e.currentTarget) closeModal(id); }
+
+/* ─── EMAIL REGISTRATION ─── */
+function registerEmail() {
+  const email = document.getElementById('regEmail').value.trim();
+  if (!email || !email.includes('@')) { document.getElementById('regEmail').style.borderColor='#f5a0a0'; return; }
+  document.getElementById('regForm').style.display = 'none';
+  document.getElementById('regSuccess').style.display = 'block';
+}
+
+/* ═══ LECTURE MODULE DATA ═══ */
+const MODULES = [
+  {
+    title: "NCDs & HIV — The Dual Burden",
+    slides: [
+      { eyebrow:"Module 1 · Background", title:"HIV &amp; Non-Communicable Diseases — <em>The Dual Burden</em>",
+        body:"NCDs are now the leading cause of death globally. Thanks to ART, life expectancy of PLHIV with optimal adherence is now similar to HIV-negative people. As people <strong>age with HIV</strong>, NCDs are becoming a serious threat to the gains made through ART.",
+        extra:{type:"data",cols:3,items:[{v:"#1",l:"Cause of death globally",s:"NCDs overtake infectious disease"},{v:"≈HIV−",l:"Life expectancy on ART",s:"With optimal adherence"},{v:"↑Risk",l:"NCD burden",s:"As PLHIV age on treatment"}]},
+        note:"The success of ART programmes means clinicians now face a new challenge: managing chronic diseases in an ageing PLHIV population. NCDs — hypertension, diabetes, renal disease — are the new frontier in HIV care."
+      },
+      { eyebrow:"Module 1 · Mechanisms", title:"Why Are NCDs More Common <em>in PLHIV?</em>",
+        body:"Multiple converging mechanisms drive higher NCD rates in PLHIV — both disease-related and treatment-related:",
+        extra:{type:"list",items:[
+          {d:"sd-b",t:"<strong>Chronic inflammation:</strong> HIV-driven immune activation promotes endothelial dysfunction and cardiovascular disease even with viral suppression"},
+          {d:"sd-r",t:"<strong>ART dyslipidaemia:</strong> Protease inhibitors cause significant lipid abnormalities — dyslipidaemia, insulin resistance, metabolic syndrome"},
+          {d:"sd-g",t:"<strong>DTG weight gain:</strong> Dolutegravir-based regimens associated with 4–6 kg average weight gain, driving HTN and DM risk"},
+          {d:"sd-t",t:"<strong>TDF nephrotoxicity:</strong> Long-term tenofovir use causes proximal tubular toxicity — cumulative, dose-dependent, can progress to CKD"}
+        ]},
+        note:"Predicting which patients are at highest risk: those on PI-based regimens for years, those on TDF >5 years, obese patients on DTG. These patients need proactive NCD screening at every ART review."
+      },
+      { eyebrow:"Module 1 · HAALSI Evidence", title:"What the Evidence Shows — <em>HAALSI Cohort, Rural South Africa</em>",
+        body:"The HAALSI study (n=5,059 adults >40 years, rural South Africa, 2014–15) provides population-based evidence linking HIV care cascade stage to cardiometabolic outcomes. PLHIV on suppressed ART had <strong>better BP and glucose control</strong> than HIV-negative adults in the same community.",
+        extra:{type:"data",cols:2,items:[
+          {v:"1.18×",l:"Greater HTN awareness",s:"ART/Undetectable VL vs HIV− (aRR p<0.001)"},
+          {v:"1.24×",l:"Greater HTN treatment",s:"Suppressed ART vs HIV− (aRR p<0.001)"},
+          {v:"↓5.98",l:"mmHg lower SBP",s:"Among those with diagnosed HTN"},
+          {v:"↓3.77",l:"mmol/L lower glucose",s:"Among those with diagnosed DM"}
+        ]},
+        note:"Manne-Goehler J et al. J Int AIDS Soc. 2019;22(3):e25213. PMID 30916897. The ART infrastructure creates measurable cardiometabolic benefits. The implication: every ART visit is an NCD opportunity. Use it."
+      }
+    ],
+    keyPoints:[
+      {icon:"🌍",title:"NCD Burden",text:"NCDs are #1 cause of death globally. PLHIV on ART now live long enough to develop the same conditions as the general population."},
+      {icon:"⚙️",title:"ART Mechanisms",text:"Chronic HIV inflammation, PI dyslipidaemia, DTG weight gain, and TDF nephrotoxicity all increase NCD risk in PLHIV."},
+      {icon:"🏥",title:"ART Clinic = NCD Platform",text:"HAALSI data: suppressed ART correlates with better BP and glucose. Use every ART visit as an NCD touchpoint."}
+    ],
+    quiz:{
+      q:"According to the HAALSI cohort study, compared to HIV-negative adults, PLHIV on ART with an undetectable viral load had:",
+      opts:["Higher mean systolic BP and higher blood glucose","Lower mean systolic BP and lower blood glucose ✓","Similar BP but significantly higher blood glucose","No significant difference in either outcome"],
+      correct:1,
+      ok:"Correct! HAALSI found ART/Undetectable VL was associated with SBP 5.98 mmHg LOWER and glucose 3.77 mmol/L LOWER vs HIV-negative adults. This is one of the most important findings in HIV-NCD research — our ART platform creates measurable health benefits.",
+      bad:"Not quite. HAALSI found the opposite — patients on suppressed ART had significantly LOWER blood pressure (↓5.98 mmHg) and blood glucose (↓3.77 mmol/L) than HIV-negative adults. The ART care platform creates measurable cardiometabolic benefits beyond HIV treatment."
+    }
+  },
+  {
+    title: "Hypertension in PLHIV",
+    slides: [
+      { eyebrow:"Module 2 · Definition", title:"What is <em>Hypertension?</em>",
+        body:"Normal blood pressure at rest: <strong>100–140 mmHg systolic</strong> and <strong>60–90 mmHg diastolic</strong>. Hypertension is present if BP is persistently at or above <strong>140/90 mmHg</strong> for most adults. A hypertensive crisis is defined as SBP ≥180 OR DBP ≥110 mmHg.",
+        extra:{type:"data",cols:3,items:[{v:"140/90",l:"HTN threshold",s:"Persistent elevation, most adults"},{v:"180/110",l:"Hypertensive crisis",s:"Immediate action required"},{v:"5 min",l:"Rest before measuring",s:"Non-negotiable protocol step"}]},
+        note:"Hypertension is the 'silent killer' — most patients have no symptoms until end-organ damage occurs. In busy ART clinics, BP is often not measured unless the patient reports symptoms. This is the clinical gap we must close."
+      },
+      { eyebrow:"Module 2 · Technique", title:"Measuring Blood Pressure <em>Correctly</em>",
+        body:"Errors in measurement are the single largest source of misclassification. Standardised technique is essential:",
+        extra:{type:"list",items:[
+          {d:"sd-b",t:"Patient seated for <strong>at least 5 minutes</strong>, relaxed, not moving or speaking"},
+          {d:"sd-t",t:"Arm <strong>supported at the level of the heart</strong> — arm below heart level falsely elevates the reading"},
+          {d:"sd-g",t:"No tight clothing constricting the arm. Cuff bladder over brachial artery, encircling <strong>≥80% of the arm</strong>"},
+          {d:"sd-b",t:"Take <strong>two readings ≥1 minute apart</strong> and average. Single readings are unreliable."}
+        ]},
+        note:"A patient who walked briskly to the clinic room and sits for 30 seconds will have a falsely elevated reading. The 5-minute rest is non-negotiable. Always document both readings, the arm used, and cuff size."
+      },
+      { eyebrow:"Module 2 · Classification", title:"BP Staging &amp; <em>Management Thresholds</em>",
+        body:"Newlands Clinic SOP v1.24 classification (aligned with ESC/ESH and SA National HTN Guidelines 2021):",
+        extra:{type:"table",headers:["Stage","BP (mmHg)","Initial Management"],rows:[
+          ["Pre-HTN","SBP 120–139 / DBP 80–89","Lifestyle advice + monitor. No drug treatment."],
+          ["Stage 1","SBP 140–159 / DBP 90–99","Lifestyle changes 3–6 months. Start drugs if persists. Target <140/90"],
+          ["Stage 2","SBP 160–179 / DBP 100–109","Start drugs after weeks of lifestyle Tx. Target <140/90"],
+          ["Stage 3 / Crisis","SBP ≥180 / DBP ≥110","Immediate pharmacological treatment. Target <140/90"]
+        ]},
+        note:"In PLHIV with multiple risk factors (DM, CKD, proteinuria, obesity), do not wait months to treat Stage 1. The threshold to start drugs in high-risk PLHIV is lower than in the general population."
+      },
+      { eyebrow:"Module 2 · Lifestyle", title:"Non-Pharmacological Management — <em>All Stages</em>",
+        body:"All patients with pre-hypertension and hypertension require structured lifestyle advice alongside any drug treatment:",
+        extra:{type:"list",items:[
+          {d:"sd-t",t:"<strong>Regular exercise:</strong> Brisk walking ≥30 minutes/day, ≥5 days/week — also counteracts DTG-associated weight gain"},
+          {d:"sd-b",t:"<strong>Stop smoking:</strong> Smoking multiplies cardiovascular risk dramatically in PLHIV — cessation is urgent"},
+          {d:"sd-g",t:"<strong>Weight reduction:</strong> Even 5–10% loss lowers SBP 5–10 mmHg. Priority for DTG patients with weight gain."},
+          {d:"sd-r",t:"<strong>Reduce salt:</strong> DASH diet targets <5g NaCl/day. Avoid processed foods, crisps, tinned fish, traditional salted meats"},
+          {d:"sd-t",t:"<strong>Limit alcohol:</strong> >2 standard drinks/day raises BP. Heavy drinking causes resistant hypertension."}
+        ]},
+        note:"Non-pharmacological management must be reinforced at every visit — not just said once at diagnosis. In PLHIV on DTG with weight gain and new hypertension, structured exercise is the most impactful intervention alongside drug treatment."
+      },
+      { eyebrow:"Module 2 · Drug Treatment", title:"First-Line Drug Treatment — <em>Newlands Clinic SOP v1.24</em>",
+        body:"Drug selection must account for ART interactions. Amlodipine (CCB) is safe with all modern ART regimens including DTG:",
+        extra:{type:"table",headers:["Stage","Drug","Dose","Key Note"],rows:[
+          ["Stage 1","Amlodipine","10 mg od","First choice. Safe with DTG/EFV/NVP. Use ACE/ARB if DM or CKD."],
+          ["Stage 1 + DM/CKD","Enalapril or Losartan","5–20mg / 50mg od","ACE or ARB (NOT both). Renoprotective."],
+          ["Stage 2/3","Amlodipine + Losartan","10mg + 50mg od","Start dual therapy immediately. Weekly BP checks."],
+          ["HTN Urgency","Nifedipine","40 mg stat po","SBP>160/DBP>110, no organ damage. Recheck 1hr."],
+          ["HTN Emergency","Refer immediately","—","End-organ damage present. IV access. Do NOT delay."]
+        ]},
+        note:"ABSOLUTE CONTRAINDICATION: NEVER combine ACE inhibitor (Enalapril) + ARB (Losartan). Hyperkalaemia can be fatal. If on ritonavir-boosted ART (PI/r), ritonavir increases CCB blood levels up to 3× — start Amlodipine at 2.5–5mg and titrate slowly."
+      }
+    ],
+    keyPoints:[
+      {icon:"📏",title:"Diagnose Correctly",text:"Average 2 readings after 5-min rest. Stage 1 ≥140/90. Stage 2/3 ≥160/100. Crisis ≥180/110 mmHg."},
+      {icon:"💊",title:"Drug of Choice",text:"Amlodipine 10mg (CCB) first-line. Add ACE/ARB if DM or CKD. NEVER combine ACE+ARB — fatal hyperkalaemia risk."},
+      {icon:"🚨",title:"HTN Crisis",text:"Urgency (no organ damage): Nifedipine 40mg stat. Emergency (organ damage present): IV access + immediate referral."}
+    ],
+    quiz:{
+      q:"A patient on TDF/3TC/DTG has BP 162/104 mmHg on two readings taken 5 minutes apart. No symptoms of end-organ damage. What is the MOST appropriate immediate management?",
+      opts:["Nifedipine 40 mg stat po — this is a hypertensive urgency","Start Amlodipine 10 mg + Losartan 50 mg od and arrange weekly BP review ✓","Lifestyle advice only — wait 3–6 months before starting drugs at Stage 2","Refer immediately to hospital — cannot manage Stage 2 HTN at an ART clinic"],
+      correct:1,
+      ok:"Correct! BP 162/104 is Stage 2 HTN — NOT a hypertensive urgency (which requires DBP >110 or SBP ≥180 with symptoms). Stage 2 requires immediate dual therapy: Amlodipine 10mg + Losartan 50mg od, with weekly BP checks until controlled. Fully manageable at an ART clinic using the Newlands SOP.",
+      bad:"Not the best approach. BP 162/104 without symptoms is Stage 2 HTN, not a hypertensive urgency (threshold: DBP >110 or SBP ≥180). Stage 2 requires immediate dual therapy — Amlodipine 10mg + Losartan 50mg — with weekly BP review. No referral needed."
+    }
+  },
+  {
+    title: "Diabetes Mellitus in PLHIV",
+    slides: [
+      { eyebrow:"Module 3 · Definition", title:"Diabetes Mellitus — <em>Definition &amp; Types</em>",
+        body:"Diabetes mellitus (DM) is a metabolic disease causing chronically high blood sugar, resulting from decreased insulin, decreased insulin response (resistance), or both. In PLHIV, both mechanisms operate — driven by HIV inflammation and ART toxicity.",
+        extra:{type:"list",items:[
+          {d:"sd-b",t:"<strong>Type 1 DM:</strong> Autoimmune pancreatic beta-cell destruction. Absolute insulin deficiency. Less common in PLHIV."},
+          {d:"sd-t",t:"<strong>Type 2 DM:</strong> Insulin resistance + relative impairment of insulin secretion. Dominant form in PLHIV — driven by ART, obesity, chronic inflammation."},
+          {d:"sd-g",t:"<strong>ART-metabolic syndrome:</strong> PI-based regimens and DTG weight gain significantly increase Type 2 DM risk. Hereditary component — always take family history."}
+        ]},
+        note:"In ART clinic practice, almost all new DM diagnoses in PLHIV will be Type 2. Always ask about family history, duration on ART, and which regimen — especially PI or DTG history. These contextualise the risk."
+      },
+      { eyebrow:"Module 3 · Symptoms", title:"Clinical Presentation — <em>When to Suspect DM</em>",
+        body:"Classic DM symptoms result from hyperglycaemia. Many patients — especially early DM — are asymptomatic, making systematic screening at ART visits critical:",
+        extra:{type:"list",items:[
+          {d:"sd-r",t:"<strong>Polydipsia</strong> (increased thirst) · <strong>Polyuria</strong> (frequent urination) · <strong>Polyphagia</strong> (increased hunger)"},
+          {d:"sd-g",t:"Unintentional weight loss · Blurred vision · Fatigue · Non-healing ulcers"},
+          {d:"sd-b",t:"<strong>Men:</strong> Erectile dysfunction · <strong>Women:</strong> Recurrent UTIs, recurrent vaginal candidiasis (common missed presentation)"}
+        ]},
+        note:"Recurrent vaginal candidiasis is a commonly missed DM presentation in women. Always check RBS when a female PLHIV presents with recurrent thrush. Similarly, any non-healing wound in a PLHIV on ART should trigger urgent blood glucose testing."
+      },
+      { eyebrow:"Module 3 · Diagnosis", title:"Diagnosing DM — <em>Criteria &amp; Thresholds</em>",
+        body:"Diagnosis is based on symptoms plus glucose, or two concordant tests in asymptomatic patients:",
+        extra:{type:"table",headers:["Test","Diabetes","Pre-diabetes"],rows:[
+          ["Fasting plasma glucose (FPG)","≥ 7.0 mmol/L","5.7–6.9 mmol/L"],
+          ["HbA1c","≥ 6.5% (48 mmol/mol)","5.7–6.4%"],
+          ["Random blood sugar (RBS)","≥ 11 mmol/L + symptoms","—"],
+          ["2-hr OGTT","≥ 11.1 mmol/L","7.8–11.0 mmol/L"]
+        ]},
+        note:"If SYMPTOMATIC with RBS >11 mmol/L → diagnose DM immediately, start treatment, request urinalysis and baseline HbA1c. If ASYMPTOMATIC with RBS >11 mmol/L → confirm with a second test before diagnosing. HbA1c may be unreliable in PLHIV with anaemia — prefer FBG in those patients."
+      },
+      { eyebrow:"Module 3 · First-Line Tx", title:"First-Line Drug Treatment — <em>Metformin &amp; the DTG Interaction</em>",
+        body:"Metformin is the first-line oral hypoglycaemic for most PLHIV. Dosing differs critically based on the ART regimen:",
+        extra:{type:"list",items:[
+          {d:"sd-r",t:"<strong>ON DTG (Dolutegravir):</strong> Start Metformin <strong>250 mg nocte</strong>. Increase to 250 mg bd after 2 weeks. Max 500 mg bd. (DTG inhibits OCT2 transporter → ↑metformin levels → start LOW)"},
+          {d:"sd-b",t:"<strong>NOT on DTG:</strong> Start Metformin 500 mg od. Titrate to maximum <strong>2 g/day</strong> in divided doses."},
+          {d:"sd-g",t:"<strong>GI intolerance:</strong> Take with food. If unable to tolerate, move to second-line."},
+          {d:"sd-t",t:"<strong>Contraindications:</strong> eGFR <30, chronic liver disease, alcoholism, severe heart failure → risk of lactic acidosis → second-line therapy"}
+        ]},
+        note:"The DTG-metformin interaction is critically important at Newlands Clinic given our predominantly TDF/3TC/DTG first-line regimen. DTG inhibits the OCT2 renal transporter, reducing metformin clearance. ALWAYS halve the starting dose in DTG patients to avoid metformin toxicity."
+      },
+      { eyebrow:"Module 3 · Second &amp; Third Line", title:"Second &amp; Third Line DM Therapy — <em>Sulphonylureas &amp; Insulin</em>",
+        body:"When metformin is insufficient or contraindicated, add a sulphonylurea. Age determines the drug choice:",
+        extra:{type:"table",headers:["Line","Age/Condition","Drug","Dose"],rows:[
+          ["2nd line","< 50 years","Glibenclamide","2.5 mg q12h. Increase weekly. Max 20 mg/day."],
+          ["2nd line","> 50 years or CKD","Gliclazide","40–80 mg od (40mg in elderly/CKD). Max 320 mg/day."],
+          ["3rd line","Any","Insulin","Refer to hospital. Do not start at primary care level."]
+        ]},
+        note:"The age cut-off at 50 years reflects the risk of prolonged hypoglycaemia with glibenclamide in older patients and those with reduced renal function. Gliclazide is significantly safer in this population. Always synchronise DM follow-up with ART refill visits to reduce patient burden."
+      }
+    ],
+    keyPoints:[
+      {icon:"🩸",title:"Screen Systematically",text:"Annual FBG or HbA1c in all PLHIV ≥40 years, BMI ≥25, or on PI-based ART. RBS at every visit if symptomatic."},
+      {icon:"💊",title:"DTG + Metformin Rule",text:"On DTG: start Metformin at HALF the dose (250 mg nocte) due to OCT2 transporter interaction. Standard dose risks toxicity."},
+      {icon:"📋",title:"Second Line by Age",text:"Under 50: Glibenclamide 2.5mg bd. Over 50 or CKD: Gliclazide 40mg od. Third line (insulin): refer to hospital."}
+    ],
+    quiz:{
+      q:"A 44-year-old woman on TDF/3TC/DTG is diagnosed with Type 2 DM (symptomatic, RBS 14.2 mmol/L). What is the correct first pharmacological step?",
+      opts:["Start Metformin 500 mg bd immediately — standard dose for Type 2 DM","Start Metformin 250 mg at night — reduced dose due to the DTG-OCT2 interaction ✓","Start Glibenclamide 2.5 mg bd — she is under 50 years of age","Refer to hospital — diabetes in PLHIV must be managed at tertiary level"],
+      correct:1,
+      ok:"Excellent! She is on DTG, which inhibits the OCT2 renal transporter and raises metformin plasma levels. Starting at the standard 500 mg dose risks metformin toxicity. Correct approach: 250 mg nocte, increase to 250 mg bd after 2 weeks, max 500 mg bd. Glibenclamide is only added if metformin is insufficient.",
+      bad:"Not correct. The critical issue is the DTG-metformin interaction. Dolutegravir inhibits the OCT2 transporter, reducing metformin clearance. Starting at 500 mg bd risks elevated metformin levels and lactic acidosis. Always start at 250 mg nocte in patients on DTG — this is a mandatory dose adjustment."
+    }
+  }
+];
+
+/* ═══ SLIDE ENGINE ═══ */
+let state = { modIdx:0, slideIdx:0, playing:false, timer:null, viewed:new Set() };
+
+function loadMod(idx, btn) {
+  state.modIdx=idx; state.slideIdx=0;
+  if(state.timer){clearInterval(state.timer);state.timer=null;state.playing=false;document.getElementById('playBtn').innerHTML='&#9654;';}
+  document.querySelectorAll('.mod-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); btn.classList.add('viewed');
+  state.viewed.add(idx); updateProgress();
+  renderSlide(); renderDots(); renderKeyPoints(); renderQuiz();
+  document.getElementById('lecKP').style.display='grid';
+  document.getElementById('lecQuiz').style.display='block';
+  setAvatar("I'll walk you through Module "+(idx+1)+": "+MODULES[idx].title+". Use the controls to navigate slides, or ask me any clinical question.", false);
+}
+
+function renderSlide() {
+  const s=MODULES[state.modIdx].slides[state.slideIdx];
+  let extra='';
+  if(s.extra){
+    const ex=s.extra;
+    if(ex.type==='data'){
+      extra=`<div class="slide-extra"><div class="s-dg c${ex.cols}">`;
+      ex.items.forEach(it=>{extra+=`<div class="s-db"><div class="s-dv">${it.v}</div><div class="s-dl">${it.l}</div><div class="s-ds">${it.s}</div></div>`;});
+      extra+='</div></div>';
+    } else if(ex.type==='list'){
+      extra='<div class="slide-extra"><ul class="s-ul">';
+      ex.items.forEach(it=>{extra+=`<li><span class="sd ${it.d}">→</span><span>${it.t}</span></li>`;});
+      extra+='</ul></div>';
+    } else if(ex.type==='table'){
+      extra='<div class="slide-extra" style="overflow-x:auto;"><table class="s-table"><thead><tr>';
+      ex.headers.forEach(h=>{extra+=`<th>${h}</th>`;});
+      extra+='</tr></thead><tbody>';
+      ex.rows.forEach(row=>{extra+='<tr>';row.forEach(cell=>{extra+=`<td>${cell}</td>`;});extra+='</tr>';});
+      extra+='</tbody></table></div>';
+    }
+  }
+  document.getElementById('slideContent').innerHTML=`<div class="slide-eyebrow">${s.eyebrow}</div><div class="slide-h">${s.title}</div><div class="slide-body">${s.body}</div>${extra}`;
+  document.getElementById('sn-text').textContent=s.note;
+  const total=MODULES[state.modIdx].slides.length;
+  document.getElementById('slideCounter').textContent=`${state.slideIdx+1} / ${total}`;
+  document.getElementById('scTime').textContent=`Slide ${state.slideIdx+1} / ${total}`;
+  document.getElementById('scFill').style.width=((state.slideIdx+1)/total*100)+'%';
+  updateDots();
+}
+
+function renderDots(){
+  const total=MODULES[state.modIdx].slides.length;
+  document.getElementById('slideDots').innerHTML=Array.from({length:total},(_,i)=>`<div class="sdot${i===0?' active':''}" onclick="gotoSlide(${i})"></div>`).join('');
+}
+function updateDots(){document.querySelectorAll('#slideDots .sdot').forEach((d,i)=>{d.classList.toggle('active',i===state.slideIdx);});}
+function nextSlide(){const t=MODULES[state.modIdx].slides.length;if(state.slideIdx<t-1){state.slideIdx++;renderSlide();}}
+function prevSlide(){if(state.slideIdx>0){state.slideIdx--;renderSlide();}}
+function gotoSlide(i){state.slideIdx=i;renderSlide();}
+function seekBar(e){const pct=e.offsetX/e.currentTarget.offsetWidth;state.slideIdx=Math.min(Math.floor(pct*MODULES[state.modIdx].slides.length),MODULES[state.modIdx].slides.length-1);renderSlide();}
+function togglePlay(){
+  const btn=document.getElementById('playBtn');
+  if(state.playing){clearInterval(state.timer);state.timer=null;state.playing=false;btn.innerHTML='&#9654;';}
+  else{state.playing=true;btn.innerHTML='&#9646;&#9646;';
+    state.timer=setInterval(()=>{const t=MODULES[state.modIdx].slides.length;if(state.slideIdx<t-1){state.slideIdx++;renderSlide();}else{clearInterval(state.timer);state.timer=null;state.playing=false;btn.innerHTML='&#9654;';}},7000);}
+}
+function updateProgress(){
+  const pct=Math.round(state.viewed.size/MODULES.length*100);
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('progLabel').textContent=state.viewed.size+' of '+MODULES.length+' modules viewed';
+}
+function renderKeyPoints(){
+  document.getElementById('lecKP').innerHTML=MODULES[state.modIdx].keyPoints.map(k=>`<div class="lkp"><div class="lkp-icon">${k.icon}</div><h4>${k.title}</h4><p>${k.text}</p></div>`).join('');
+}
+function renderQuiz(){
+  const q=MODULES[state.modIdx].quiz;
+  document.getElementById('quizContent').innerHTML=`<p class="q-text">${q.q}</p><div class="q-opts">${q.opts.map((o,i)=>`<div class="qo" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div><div class="q-feedback" id="qfb"></div>`;
+}
+function answerQ(chosen){
+  const q=MODULES[state.modIdx].quiz;
+  document.querySelectorAll('.qo').forEach((el,i)=>{if(i===q.correct)el.classList.add('correct');else if(i===chosen&&chosen!==q.correct)el.classList.add('wrong');else el.classList.add('dim');});
+  const fb=document.getElementById('qfb'),ok=chosen===q.correct;
+  fb.className='q-feedback show '+(ok?'ok':'bad');
+  fb.innerHTML='<strong>'+(ok?'✓ Correct! ':'✗ Incorrect. ')+'</strong>'+(ok?q.ok:q.bad);
+}
+
+/* ═══ AI AVATAR — DR. NOMA ═══ */
+const AVATAR_SYS=`You are Dr. Noma, a warm and direct AI clinical instructor at Newlands Clinic in Zimbabwe. You teach HIV comorbidity management — hypertension and diabetes in PLHIV — to frontline clinicians.
+
+Key knowledge:
+- Newlands Clinic HTN SOP v1.24: Stage 1 HTN ≥140/90 → Amlodipine 10mg od first-line. Stage 2/3 ≥160/100 → Amlodipine 10mg + Losartan 50mg dual therapy. HTN Urgency (>160/110, no organ damage) → Nifedipine 40mg stat. NEVER combine ACE (Enalapril) + ARB (Losartan) → fatal hyperkalaemia.
+- DTG-Metformin interaction: DTG inhibits OCT2 → increased metformin levels → start at 250mg nocte (NOT 500mg) in patients on DTG.
+- DM second line: <50yrs → Glibenclamide 2.5mg bd; >50yrs/CKD → Gliclazide 40mg od. Third line = refer for insulin.
+- HAALSI (PMID 30916897): PLHIV on suppressed ART had lower SBP (↓5.98 mmHg) and glucose (↓3.77 mmol/L) vs HIV-negative adults.
+- EDLIZ 2020, WHO HIV Guidelines 2024, SA National HTN Guidelines 2021.
+
+Respond as a direct, warm clinical mentor. Give specific drug names and doses. Keep responses to 2-4 short paragraphs. End every response with one sentence starting "📋 Key point:". Plain text only, no markdown asterisks or headers.`;
+
+let chatHistory=[];
+
+async function askAvatar(){
+  const input=document.getElementById('avInput');
+  const q=input.value.trim();
+  if(!q)return;
+  input.value='';input.style.height='auto';
+  document.getElementById('avSend').disabled=true;
+  setAvatar(null,true);
+  chatHistory.push({role:'user',content:q});
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:800,system:AVATAR_SYS,messages:chatHistory})
+    });
+    if(!res.ok)throw new Error('API '+res.status);
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'No response received. Please try again.';
+    chatHistory.push({role:'assistant',content:reply});
+    setAvatar(reply,false);
+  }catch(err){
+    let msg='Connection error. ';
+    if(err.message.includes('401'))msg+='Please configure your Anthropic API key for this deployment.';
+    else msg+='Please check your internet connection and try again.';
+    chatHistory.pop();
+    setAvatar(msg,false);
+  }
+  document.getElementById('avSend').disabled=false;
+}
+
+function setAvatar(text,thinking){
+  const bubble=document.getElementById('avText');
+  const dot=document.querySelector('.av-dot');
+  const statusText=document.getElementById('avStatusText');
+  if(thinking){
+    bubble.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';
+    dot.classList.add('thinking');statusText.textContent='Thinking...';
+  }else{
+    bubble.textContent=text;dot.classList.remove('thinking');statusText.textContent='Ready';
+    animateMouth();
+  }
+}
+function animateMouth(){
+  const mouth=document.getElementById('avMouth');if(!mouth)return;
+  let t=0;
+  const f=['M 34 36 Q 40 41 46 36','M 34 38 Q 40 43 46 38','M 34 36 Q 40 41 46 36','M 34 34 Q 40 39 46 34'];
+  const iv=setInterval(()=>{mouth.setAttribute('d',f[t%f.length]);t++;if(t>24)clearInterval(iv);},140);
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded',()=>{
+  loadMod(0,document.querySelector('.mod-btn'));
+});
+</script>
+</body>
+</html>
