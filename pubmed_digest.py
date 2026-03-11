@@ -39,9 +39,9 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 # Email settings — set as environment variables
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
-EMAIL_SENDER = os.environ.get("EMAIL_SENDER", "")       # your Gmail address
-EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "")   # Gmail App Password
-EMAIL_RECIPIENTS = os.environ.get("EMAIL_RECIPIENTS", "").split(",")  # comma-separated list
+EMAIL_SENDER = os.environ.get("EMAIL_SENDER", "")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "")
+EMAIL_RECIPIENTS = os.environ.get("EMAIL_RECIPIENTS", "").split(",")
 
 # Clinic/organisation name (appears in email)
 CLINIC_NAME = "HIV & Hypertension Care Programme"
@@ -68,7 +68,7 @@ def search_pubmed(query, max_results=5):
         "retmax": max_results,
         "retmode": "json",
         "sort": "relevance",
-        "email": os.environ.get("EMAIL_SENDER", "")  # Identifies you to PubMed for higher rate limits
+        "email": os.environ.get("EMAIL_SENDER", "")
     })
     url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?{params}"
 
@@ -90,7 +90,7 @@ def fetch_article_details(pmids):
     })
     url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?{params}"
 
-    time.sleep(0.5)  # Respect PubMed rate limits
+    time.sleep(0.5)
     with urllib.request.urlopen(url) as response:
         xml_data = response.read()
 
@@ -105,7 +105,6 @@ def fetch_article_details(pmids):
             journal = article.findtext(".//Journal/Title", "Unknown Journal")
             year = article.findtext(".//PubDate/Year", "")
 
-            # Get author list
             authors = []
             for author in article.findall(".//Author")[:3]:
                 last = author.findtext("LastName", "")
@@ -116,7 +115,7 @@ def fetch_article_details(pmids):
             if len(article.findall(".//Author")) > 3:
                 author_str += " et al."
 
-            if abstract:  # Only include articles with abstracts
+            if abstract:
                 articles.append({
                     "pmid": pmid,
                     "title": title,
@@ -148,7 +147,7 @@ def get_articles():
             articles = fetch_article_details(new_pmids)
             all_articles.extend(articles)
 
-        time.sleep(1)  # Pause 1 second between PubMed requests
+        time.sleep(1)
 
         if len(all_articles) >= MAX_ARTICLES:
             break
@@ -318,6 +317,13 @@ def main():
     print(f"HIV & Hypertension Digest — {datetime.today().strftime('%Y-%m-%d')}")
     print("=" * 50)
 
+    # Debug: check secrets are loading
+    print(f"\n🔍 Debug check:")
+    print(f"   EMAIL_SENDER set: {'YES' if EMAIL_SENDER else 'NO - MISSING'}")
+    print(f"   EMAIL_PASSWORD set: {'YES' if EMAIL_PASSWORD else 'NO - MISSING'}")
+    print(f"   EMAIL_RECIPIENTS set: {'YES' if EMAIL_RECIPIENTS[0] else 'NO - MISSING'}")
+    print(f"   ANTHROPIC_API_KEY set: {'YES' if ANTHROPIC_API_KEY else 'NO - MISSING'}")
+
     # 1. Fetch articles
     print("\n📥 Fetching articles from PubMed...")
     articles = get_articles()
@@ -349,6 +355,9 @@ def main():
         send_email(html)
     else:
         print("⚠️  Email credentials not configured. Preview saved locally only.")
+        print(f"   EMAIL_SENDER value: '{EMAIL_SENDER}'")
+        print(f"   EMAIL_PASSWORD length: {len(EMAIL_PASSWORD)} chars")
+        print(f"   EMAIL_RECIPIENTS value: '{EMAIL_RECIPIENTS}'")
 
     print("\n✅ Done!")
 
