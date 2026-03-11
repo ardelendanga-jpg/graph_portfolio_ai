@@ -9,6 +9,7 @@ import smtplib
 import urllib.request
 import urllib.parse
 import json
+import time
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
@@ -66,7 +67,8 @@ def search_pubmed(query, max_results=5):
         "term": full_query,
         "retmax": max_results,
         "retmode": "json",
-        "sort": "relevance"
+        "sort": "relevance",
+        "email": os.environ.get("EMAIL_SENDER", "")  # Identifies you to PubMed for higher rate limits
     })
     url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?{params}"
 
@@ -88,6 +90,7 @@ def fetch_article_details(pmids):
     })
     url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?{params}"
 
+    time.sleep(0.5)  # Respect PubMed rate limits
     with urllib.request.urlopen(url) as response:
         xml_data = response.read()
 
@@ -144,6 +147,8 @@ def get_articles():
         if new_pmids:
             articles = fetch_article_details(new_pmids)
             all_articles.extend(articles)
+
+        time.sleep(1)  # Pause 1 second between PubMed requests
 
         if len(all_articles) >= MAX_ARTICLES:
             break
