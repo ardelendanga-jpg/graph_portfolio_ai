@@ -1,6 +1,6 @@
 """
 HIV & Hypertension Literature Digest
-Fetches recent PubMed articles, summarizes them with Claude AI,
+Fetches recent PubMed articles, summarizes them with Gemini AI,
 and sends a monthly email digest to clinicians.
 """
 
@@ -20,30 +20,26 @@ from email.mime.text import MIMEText
 # CONFIGURATION — Edit these values
 # ─────────────────────────────────────────────
 
-# PubMed search terms (customize as needed)
 SEARCH_QUERIES = [
     "HIV hypertension management Africa",
     "antiretroviral therapy cardiovascular Africa",
     "hypertension treatment sub-Saharan Africa"
 ]
 
-# Number of articles per digest
 MAX_ARTICLES = 10
-
-# How many days back to search (e.g. 35 covers last month)
 DAYS_BACK = 35
 
-# Claude API key — set as environment variable ANTHROPIC_API_KEY
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+# Gemini API key — set as GitHub secret GEMINI_API_KEY
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = "gemini-1.5-flash"
 
-# Email settings — set as environment variables
+# Email settings — set as GitHub secrets
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
 EMAIL_SENDER = os.environ.get("EMAIL_SENDER", "")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD", "")
 EMAIL_RECIPIENTS = os.environ.get("EMAIL_RECIPIENTS", "").split(",")
 
-# Clinic/organisation name (appears in email)
 CLINIC_NAME = "HIV & Hypertension Care Programme"
 
 
@@ -58,7 +54,6 @@ def build_date_range():
 
 
 def search_pubmed(query, max_results=5):
-    """Search PubMed and return list of PMIDs."""
     start_date, end_date = build_date_range()
     full_query = f'{query} AND ("{start_date}"[Date - Publication] : "{end_date}"[Date - Publication])'
 
@@ -78,7 +73,6 @@ def search_pubmed(query, max_results=5):
 
 
 def fetch_article_details(pmids):
-    """Fetch title, abstract, authors, journal for a list of PMIDs."""
     if not pmids:
         return []
 
@@ -133,7 +127,6 @@ def fetch_article_details(pmids):
 
 
 def get_articles():
-    """Collect unique articles across all search queries."""
     seen_pmids = set()
     all_articles = []
 
@@ -156,13 +149,12 @@ def get_articles():
 
 
 # ─────────────────────────────────────────────
-# STEP 2: SUMMARIZE WITH CLAUDE API
+# STEP 2: SUMMARIZE WITH GEMINI API
 # ─────────────────────────────────────────────
 
-def summarize_with_claude(article):
-    """Send abstract to Claude and return a plain-language clinician summary."""
-    if not ANTHROPIC_API_KEY:
-        return "AI summary not available — please configure ANTHROPIC_API_KEY."
+def summarize_with_gemini(article):
+    if not GEMINI_API_KEY:
+        return "AI summary not available — please configure GEMINI_API_KEY."
 
     prompt = f"""You are a medical communication specialist helping clinicians in Southern Africa stay updated on HIV and hypertension management.
 
@@ -179,28 +171,25 @@ Abstract: {article['abstract']}
 
 Write only the summary, no preamble."""
 
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
+
     request_data = json.dumps({
-        "model": "claude-haiku-4-5-20251001",
-        "max_tokens": 300,
-        "messages": [{"role": "user", "content": prompt}]
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"maxOutputTokens": 400, "temperature": 0.3}
     }).encode("utf-8")
 
     req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages",
+        url,
         data=request_data,
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": ANTHROPIC_API_KEY,
-            "anthropic-version": "2023-06-01"
-        }
+        headers={"Content-Type": "application/json"}
     )
 
     try:
         with urllib.request.urlopen(req) as response:
             result = json.loads(response.read())
-        return result["content"][0]["text"]
+        return result["candidates"][0]["content"]["parts"][0]["text"]
     except Exception as e:
-        print(f"Claude API error: {e}")
+        print(f"Gemini API error: {e}")
         return "Summary could not be generated for this article."
 
 
@@ -244,7 +233,6 @@ def build_email_html(articles_with_summaries):
 
   <div style="max-width:660px; margin:32px auto; background:#f3f4f6; padding:0 16px 40px;">
 
-    <!-- Header -->
     <div style="background:linear-gradient(135deg,#1e40af,#2563eb); border-radius:8px 8px 0 0;
                 padding:32px 32px 24px; text-align:center;">
       <p style="margin:0 0 4px; color:#93c5fd; font-size:13px; font-weight:600; letter-spacing:1px;
@@ -255,7 +243,6 @@ def build_email_html(articles_with_summaries):
       <p style="margin:0; color:#bfdbfe; font-size:15px;">{month_year} &nbsp;·&nbsp; HIV & Hypertension</p>
     </div>
 
-    <!-- Intro -->
     <div style="background:#eff6ff; border-bottom:1px solid #dbeafe; padding:18px 32px;">
       <p style="margin:0; font-size:14px; color:#1e40af; line-height:1.6;">
         <strong>👋 Hello,</strong> here are this month's key articles on HIV and hypertension management,
@@ -264,12 +251,10 @@ def build_email_html(articles_with_summaries):
       </p>
     </div>
 
-    <!-- Articles -->
     <div style="background:#f3f4f6; padding:24px 16px 8px;">
       {article_blocks}
     </div>
 
-    <!-- Footer -->
     <div style="text-align:center; padding:20px 16px 0;">
       <p style="margin:0 0 6px; font-size:13px; color:#9ca3af;">
         Summaries generated by AI. Always verify clinical decisions with full articles and guidelines.
@@ -317,14 +302,12 @@ def main():
     print(f"HIV & Hypertension Digest — {datetime.today().strftime('%Y-%m-%d')}")
     print("=" * 50)
 
-    # Debug: check secrets are loading
     print(f"\n🔍 Debug check:")
+    print(f"   GEMINI_API_KEY set: {'YES' if GEMINI_API_KEY else 'NO - MISSING'}")
     print(f"   EMAIL_SENDER set: {'YES' if EMAIL_SENDER else 'NO - MISSING'}")
     print(f"   EMAIL_PASSWORD set: {'YES' if EMAIL_PASSWORD else 'NO - MISSING'}")
     print(f"   EMAIL_RECIPIENTS set: {'YES' if EMAIL_RECIPIENTS[0] else 'NO - MISSING'}")
-    print(f"   ANTHROPIC_API_KEY set: {'YES' if ANTHROPIC_API_KEY else 'NO - MISSING'}")
 
-    # 1. Fetch articles
     print("\n📥 Fetching articles from PubMed...")
     articles = get_articles()
     print(f"   Found {len(articles)} articles with abstracts.")
@@ -333,31 +316,25 @@ def main():
         print("No articles found. Exiting.")
         return
 
-    # 2. Summarize each article
-    print("\n🤖 Generating AI summaries...")
+    print("\n🤖 Generating AI summaries with Gemini...")
     articles_with_summaries = []
     for i, article in enumerate(articles, 1):
         print(f"   Summarizing {i}/{len(articles)}: {article['title'][:60]}...")
-        summary = summarize_with_claude(article)
+        summary = summarize_with_gemini(article)
         articles_with_summaries.append({"article": article, "summary": summary})
+        time.sleep(0.5)
 
-    # 3. Build email
     print("\n📧 Building email digest...")
     html = build_email_html(articles_with_summaries)
 
-    # Save a local preview
     with open("digest_preview.html", "w", encoding="utf-8") as f:
         f.write(html)
     print("   Preview saved to digest_preview.html")
 
-    # 4. Send email
     if EMAIL_SENDER and EMAIL_PASSWORD and EMAIL_RECIPIENTS[0]:
         send_email(html)
     else:
         print("⚠️  Email credentials not configured. Preview saved locally only.")
-        print(f"   EMAIL_SENDER value: '{EMAIL_SENDER}'")
-        print(f"   EMAIL_PASSWORD length: {len(EMAIL_PASSWORD)} chars")
-        print(f"   EMAIL_RECIPIENTS value: '{EMAIL_RECIPIENTS}'")
 
     print("\n✅ Done!")
 
